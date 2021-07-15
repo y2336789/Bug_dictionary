@@ -2,16 +2,12 @@ package com.bliss.csc.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +30,6 @@ public class MyAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView= LayoutInflater.from(context).inflate(R.layout.recycler_bug,parent,false);
-
         VH vh= new VH(itemView);
         return vh;
     }
@@ -49,7 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter {
         vh.cropName.setText("피해작물 : "+bug.getCropName());
         insectKey=bug.getInsectKey();
 
-
         //이미지는 없을 수도 있음.
         if(bug.getImgUrl()==null){
             vh.iv.setVisibility(View.GONE);
@@ -60,9 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter {
             //해주는 Library사용(Glide library)
 
             Glide.with(context).load(bug.getImgUrl()).into(vh.iv);
-
         }
-
     }
     @Override
     public int getItemCount() {

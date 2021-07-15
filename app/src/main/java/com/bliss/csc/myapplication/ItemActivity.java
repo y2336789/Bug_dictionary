@@ -1,19 +1,17 @@
 package com.bliss.csc.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -21,8 +19,9 @@ import java.net.URL;
 
 public class ItemActivity extends AppCompatActivity {
 
-    TextView t1, t2, t3, t4;
-    String gen, spe, fam, ord, dmg;
+    TextView t1, t2, t3, t4, t5;
+    String gen, spe, fam, ord, dmg, eco;
+    Button btn;
 
     public String key = "20218f5922b84a6b4691db8472132ececb19";
 
@@ -38,6 +37,16 @@ public class ItemActivity extends AppCompatActivity {
         t2=findViewById(R.id.species);
         t3=findViewById(R.id.fam_ord);
         t4=findViewById(R.id.what_dmg);
+        t5=findViewById(R.id.env);
+
+//        btn.findViewById(R.id.testbtn);
+//        btn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent1 = new Intent();
+//            }
+//        })
+//
 
         try {
             URL url=new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
@@ -49,7 +58,8 @@ public class ItemActivity extends AppCompatActivity {
             XmlFeedTask task= new XmlFeedTask();
             task.execute(url); //doInBackground()메소드가 발동[thread의 start()와 같은 역할]
         } catch (MalformedURLException e) { e.printStackTrace();}
-
+        t4.setMovementMethod(new ScrollingMovementMethod());
+        t5.setMovementMethod(new ScrollingMovementMethod());
     }
 
     class XmlFeedTask extends AsyncTask<URL, Void, String> {
@@ -85,6 +95,7 @@ public class ItemActivity extends AppCompatActivity {
                                 gen = xpp.getText();
                             }else if(tagName.equals("ecologyInfo")){
                                 xpp.next();
+                                eco = xpp.getText();
                             }else if(tagName.equals("insectFamily")){
                                 xpp.next();
                             }else if(tagName.equals("damageInfo")){
@@ -135,6 +146,11 @@ public class ItemActivity extends AppCompatActivity {
             } else {
                 t4.setText("정확한 피해 현상이 없습니다.");
             }
+            if(eco!= null) {
+                t5.setText(stripHtml(eco));
+            } else {
+                t5.setText("정확한 생태 정보가 없습니다.");            }
+
             return "파싱종료";
         }
     }

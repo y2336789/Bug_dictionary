@@ -5,15 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -24,9 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String key = "20218f5922b84a6b4691db8472132ececb19";
     RecyclerView recyclerView;
-
     ArrayList<Bug> bugs = new ArrayList<>();
-
     MyAdapter adapter;
 
     @Override
@@ -44,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         readRss();
     }
-
 
     void readRss() {
         try {
@@ -129,13 +121,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return "파싱종료";
         }
-
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
             adapter.notifyItemInserted(bugs.size());
         }
-
         @Override
         protected void onPostExecute(String s) { //매개 변수 s에 들어오는 값음 doIBackground()의 return 값이다.
             super.onPostExecute(s);
@@ -143,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
             //리사이클러에서 보여주는 데이터를 가진
             //아답터에게 데이터가 변경되었다고 공지
 //            adapter.notifyDataSetChanged();
-
-
             //이 메소드 안에서는 UI변경 작업 가능
             Toast.makeText(MainActivity.this, s+":"+bugs.size(), Toast.LENGTH_SHORT).show();
         }
