@@ -5,6 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -22,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Bug> bugs = new ArrayList<>();
     MyAdapter adapter;
 
+    String this_name, parse_name;
+
+    TextView textView;
+    String[] crop_names = {"사과", "복숭아", "배", "포도"};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +46,83 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        readRss();
+//        readRss();
+
+        // 스피너 설정 코드
+        textView =findViewById(R.id.testing);
+        Spinner spinner =findViewById(R.id.select_crop);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, crop_names);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                textView.setText(crop_names[position]);
+                readRss(crop_names[position]);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                textView.setText("");
+            }
+        });
     }
 
-    void readRss() {
-        try {
-            URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
-                    + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
-            RssFeedTask task = new RssFeedTask();
-            task.execute(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+    void readRss(String cropName) {
+        if(cropName.equals("사과")) {
+            this_name = cropName;
+            try {
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }else if(cropName.equals("복숭아")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%B3%B5%EC%88%AD%EC%95%84&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("배")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%B0%B0&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("포도")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%ED%8F%AC%EB%8F%84&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -86,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(bug!=null) bug.setSpecies(xpp.getText());
                             }else if(tagName.equals("cropName")){
                                 xpp.next();
-                                if(bug!=null) bug.setCropName(xpp.getText());
+                                bug.setCropName(xpp.getText());
                             }else if(tagName.equals("insectKey")){
                                 xpp.next();
                                 if(bug!=null) bug.setInsectKey(xpp.getText());
@@ -97,10 +174,11 @@ public class MainActivity extends AppCompatActivity {
                         case XmlPullParser.END_TAG:
                             tagName=xpp.getName();
                             if(tagName.equals("item")){
-                                bugs.add(bug);
-                                bug=null;
+                                if(bug.getCropName().equals(this_name)){
+                                    bugs.add(bug);
+                                    bug=null;
+                                }
                                 // Recycler Apdater에 데이터가 변경되었다고 통지
-
                                 publishProgress();
                             }
                             break;
@@ -136,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
             //이 메소드 안에서는 UI변경 작업 가능
             Toast.makeText(MainActivity.this, s+":"+bugs.size(), Toast.LENGTH_SHORT).show();
         }
+
+
 
     }
 }
