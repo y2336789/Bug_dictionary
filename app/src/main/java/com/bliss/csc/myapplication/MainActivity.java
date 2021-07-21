@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String[] crop_names = {"사과", "복숭아", "배", "포도"};
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

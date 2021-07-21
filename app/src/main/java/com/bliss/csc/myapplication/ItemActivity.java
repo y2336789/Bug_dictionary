@@ -1,29 +1,59 @@
 package com.bliss.csc.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
+
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AsyncPlayer;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemActivity extends AppCompatActivity {
 
-    TextView t1, t2, t3, t4, t5;
-    String gen, spe, fam, ord, dmg, eco;
-    Button btn;
-
+    public RequestManager mGlideRequestManager;
+    public TextView t1, t2, t3, t4, t5;
+    public String gen, spe, fam, ord, dmg, eco;
     public String key = "20218f5922b84a6b4691db8472132ececb19";
+    public String tag_url = null;
+    public int count = 0;
+    public List<String> images = new ArrayList<>();
+    public String[] get_arrary = null;
+    public ImageView img;
+    public Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +68,28 @@ public class ItemActivity extends AppCompatActivity {
         t3=findViewById(R.id.fam_ord);
         t4=findViewById(R.id.what_dmg);
         t5=findViewById(R.id.env);
-
-//        btn.findViewById(R.id.testbtn);
-//        btn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent1 = new Intent();
-//            }
-//        })
-//
+        img=findViewById(R.id.img);
 
         try {
             URL url=new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
             + key + "&serviceCode=SVC07&serviceCodeDetail=SVC07&displayCount=10&startPoint=1&insectKey=" + keynum);
 
-            //스트림역할하여 데이터 읽어오기 : 인터넷 작업은 반드시 퍼미션 작성해야함.
-            //Network작업은 반드시 별도의 Thread만 할 수 있다.
+            //스트림 역할하여 데이터 읽어오기 : 인터넷 작업은 반드시 퍼미션 작성해야함.
             //별도의 Thread 객체 생성
             XmlFeedTask task= new XmlFeedTask();
-            task.execute(url); //doInBackground()메소드가 발동[thread의 start()와 같은 역할]
+            task.execute(url);
+            //doInBackground()메소드가 발동[thread의 start()와 같은 역할]
         } catch (MalformedURLException e) { e.printStackTrace();}
+
         t4.setMovementMethod(new ScrollingMovementMethod());
         t5.setMovementMethod(new ScrollingMovementMethod());
-    }
 
+}
     class XmlFeedTask extends AsyncTask<URL, Void, String> {
+        private String[] arrays = null;
         @Override
         protected String doInBackground(URL... urls) {
             URL url = urls[0];
-
             try {
                 InputStream is = url.openStream();
 
@@ -77,7 +100,6 @@ public class ItemActivity extends AppCompatActivity {
                 int eventType = xpp.getEventType();
 
                 String tagName = null;
-
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     switch (eventType) {
                         case XmlPullParser.START_DOCUMENT:
@@ -96,6 +118,13 @@ public class ItemActivity extends AppCompatActivity {
                             }else if(tagName.equals("ecologyInfo")){
                                 xpp.next();
                                 eco = xpp.getText();
+                            }else if(tagName.equals("image")){
+                                xpp.next();
+                                tag_url = xpp.getText(); count++;
+                                if(count<=5) {
+                                    images.add(tag_url);
+                                    Log.e("크기", "size is : " + images.size());
+                                }
                             }else if(tagName.equals("insectFamily")){
                                 xpp.next();
                             }else if(tagName.equals("damageInfo")){
@@ -108,10 +137,8 @@ public class ItemActivity extends AppCompatActivity {
                                 ord = xpp.getText();
                             }else if (tagName.equals("cropName")) {
                                 xpp.next();
-//                                insectFamily = xpp.getText();
                             }else if (tagName.equals("insectSpecies")) {
                                 xpp.next();
-                                //t2.setText(gen + " / " + xpp.getText());
                                 spe = xpp.getText();
                             }
                             break;
@@ -121,19 +148,13 @@ public class ItemActivity extends AppCompatActivity {
                             tagName = xpp.getName();
                             if (tagName.equals("insectSpecies")) {
                                 break;
-                                // Recycler Apdater에 데이터가 변경되었다고 통지
                             }
                             break;
                     }
                     eventType = xpp.next();
                 }// while
 
-                //파싱 작업이 완료되었다!!
-                //테스트로 Toast로 보여주기, 단 별도 스레드는
-                //UI작업이 불가! 그래서 runOnUiThread()를 이용했었음.
-                //이 UI작업을 하는 별도의 메소드로
-                //결과를 리턴하는 방식을 사용
-
+                //파싱 작업 끝
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
@@ -149,11 +170,42 @@ public class ItemActivity extends AppCompatActivity {
             if(eco!= null) {
                 t5.setText(stripHtml(eco));
             } else {
-                t5.setText("정확한 생태 정보가 없습니다.");            }
+                t5.setText("정확한 생태 정보가 없습니다.");
+            }
+            arrays = images.toArray(new String[images.size()]);
+            Log.e("최종 크기", "size is " + this.arrays.length);
+            new LoadImage().execute(arrays[1]);
+            return "파싱 완료";
+        }
 
-            return "파싱종료";
+    }
+
+    class LoadImage extends AsyncTask<String, String, Bitmap> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Bitmap doInBackground(String... args){
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap image) {
+            if(image != null){
+                img.setImageBitmap(image);
+            } else {
+                Toast.makeText(ItemActivity.this, "이미지가 존재하지 않거나 네트워크 오류 발생", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
+
+
     public String stripHtml(String html) {
         return Html.fromHtml(html).toString();
     }
