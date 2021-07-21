@@ -54,6 +54,9 @@ public class ItemActivity extends AppCompatActivity {
     public String[] get_arrary = null;
     public ImageView img;
     public Bitmap bitmap;
+    public Button left;
+    public Button right;
+    public int photocount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class ItemActivity extends AppCompatActivity {
         t4=findViewById(R.id.what_dmg);
         t5=findViewById(R.id.env);
         img=findViewById(R.id.img);
+        left=findViewById(R.id.left);
+        right=findViewById(R.id.right);
 
         try {
             URL url=new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
@@ -121,9 +126,9 @@ public class ItemActivity extends AppCompatActivity {
                             }else if(tagName.equals("image")){
                                 xpp.next();
                                 tag_url = xpp.getText(); count++;
-                                if(count<=5) {
+                                if(count<=7) {
                                     images.add(tag_url);
-                                    Log.e("크기", "size is : " + images.size());
+                                    //Log.e("크기", "size is : " + images.size());
                                 }
                             }else if(tagName.equals("insectFamily")){
                                 xpp.next();
@@ -174,7 +179,31 @@ public class ItemActivity extends AppCompatActivity {
             }
             arrays = images.toArray(new String[images.size()]);
             Log.e("최종 크기", "size is " + this.arrays.length);
-            new LoadImage().execute(arrays[1]);
+            new LoadImage().execute(arrays[0]);
+
+            right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(photocount < 6) {
+                        photocount++;
+                        new LoadImage().execute(arrays[photocount]);
+                    }else if(photocount == 6){
+                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(0 < photocount && photocount <= 6 ) {
+                        photocount--;
+                        new LoadImage().execute(arrays[photocount]);
+                    }else if(photocount == 0){
+                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
             return "파싱 완료";
         }
 
