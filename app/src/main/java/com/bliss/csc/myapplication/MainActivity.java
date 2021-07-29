@@ -3,11 +3,14 @@ package com.bliss.csc.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     String this_name, parse_name;
 
     TextView textView;
-    String[] crop_names = {"사과", "복숭아", "배", "포도"};
+    String[] crop_names = {"사과", "복숭아", "배", "포도","밤"};
+    Button btn;
 
 
 
@@ -67,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 textView.setText("");
+            }
+        });
+
+        // 주의 버튼
+        btn = findViewById(R.id.cauton_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CautionActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -117,6 +131,20 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 try {
                     URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%ED%8F%AC%EB%8F%84&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("밤")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%B0%A4&insectKorName=&apiKey="
                             + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
                     RssFeedTask task = new RssFeedTask();
                     task.execute(url);
