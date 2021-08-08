@@ -44,7 +44,6 @@ import java.util.List;
 
 public class ItemActivity extends AppCompatActivity {
 
-    public RequestManager mGlideRequestManager;
     public TextView t1, t2, t3, t4, t5;
     public String gen, spe, fam, ord, dmg, eco;
     public String key = "20218f5922b84a6b4691db8472132ececb19";
@@ -64,8 +63,8 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
         Intent intent = getIntent();
-        String keynum = intent.getStringExtra("InsectKey");
 
+        String keynum = intent.getStringExtra("InsectKey");
         t1=findViewById(R.id.target_name);
         t2=findViewById(R.id.species);
         t3=findViewById(R.id.fam_ord);

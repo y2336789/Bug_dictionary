@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView;
     String[] crop_names = {"사과", "복숭아", "배", "포도","밤"};
-    Button btn;
+    Button btn, btn1;
 
 
 
@@ -81,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CautionActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btn1 = findViewById(R.id.go_sick);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent1);
             }
         });
     }

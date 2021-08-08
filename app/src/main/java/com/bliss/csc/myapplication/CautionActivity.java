@@ -33,9 +33,9 @@ public class CautionActivity extends AppCompatActivity {
         addItem("멸강나방", "옥수수","Pseudaletia",
                 "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZR1DS0188M001[20110106120000000]_wm.jpg",
                 "H00000419");
-        addItem("담배나방", "고추", "Helicoverpa",
-                "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZR1DS0057M001[20110106120000000]_wm.jpg",
-                "H00000411");
+        addItem("먹노린재", "논벼", "Scotinophara",
+                "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZL1BX0069M001[20110106120000000]_wm.jpg",
+                "H00000293");
    }
     private void addItem(String Name, String CropName, String Sepecies, String ImgUrl, String InsectKey){
         Bug bug = new Bug();
