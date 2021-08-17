@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="주의"
-        android:id="@+id/cauton_btn"/>
+        android:id="@+id/caution_btn"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="경고"
         android:id="@+id/warning_btn"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

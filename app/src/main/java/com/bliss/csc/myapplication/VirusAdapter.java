@@ -7,12 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
 public class VirusAdapter extends RecyclerView.Adapter{
@@ -48,10 +45,6 @@ public class VirusAdapter extends RecyclerView.Adapter{
             vh.sickIv.setVisibility(View.GONE);
         }else{
             vh.sickIv.setVisibility(View.VISIBLE);
-            //네트워크에 있는 이미지를 보여주려면
-            //별도의 Thread가 필요한데 이를 편하게
-            //해주는 Library사용(Glide library)
-
             Glide.with(context).load(virus.getImgUrl()).into(vh.sickIv);
         }
     }
@@ -61,7 +54,6 @@ public class VirusAdapter extends RecyclerView.Adapter{
         return viruses.size();
     }
 
-    //이너클래스
     class VH extends RecyclerView.ViewHolder{
 
         TextView sickName, sickCropName;
@@ -77,10 +69,10 @@ public class VirusAdapter extends RecyclerView.Adapter{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String insectKey = viruses.get(getLayoutPosition()).getVirusKey();
+                    String virusKey = viruses.get(getLayoutPosition()).getVirusKey();
 
-                    Intent intent = new Intent(context, SecondActivity.class);
-                    intent.putExtra("VirusKey", insectKey);
+                    Intent intent = new Intent(context, VirusItemActivity.class);
+                    intent.putExtra("VirusKey", virusKey);
                     context.startActivity(intent);
                 }
             });
