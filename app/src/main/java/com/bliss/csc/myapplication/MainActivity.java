@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -28,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Bug> bugs = new ArrayList<>();
     MyAdapter adapter;
     String this_name;
-    TextView textView;
-    String[] crop_names = {"사과", "복숭아", "배", "포도","밤"};
+    String[] crop_names = {"사과", "복숭아", "배", "포도","밤", "블루베리"};
     Button btn, btn1, btn2;
 
     @Override
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // 스피너 설정 코드
-        textView =findViewById(R.id.testing);
         Spinner spinner =findViewById(R.id.select_crop);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -54,12 +51,11 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(crop_names[position]);
                 readRss(crop_names[position]);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                textView.setText("");
+
             }
         });
 
@@ -159,6 +155,20 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }else if(cropName.equals("블루베리")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%B8%94%EB%A3%A8%EB%B2%A0%EB%A6%AC&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -191,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                             }else if(tagName.equals("insectKorName")){
                                 xpp.next();
                                 if(bug!=null) bug.setName(xpp.getText());
-                            }else if(tagName.equals("oriImg")){
+                            }else if(tagName.equals("thumbImg")){
                                 xpp.next();
                                 if(bug!=null) bug.setImgUrl(xpp.getText());
                             }else if(tagName.equals("speciesName")){

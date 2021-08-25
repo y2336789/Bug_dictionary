@@ -3,23 +3,27 @@ package com.bliss.csc.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -29,52 +33,48 @@ import java.util.List;
 
 public class VirusItemActivity extends AppCompatActivity {
 
-    public TextView t1, t2, t3;
-    public String dmg, prev;
+    public String name, dmg, prev;
     public String key = "20218f5922b84a6b4691db8472132ececb19";
-    public String tag_url = null;
+    public String tag_url;
     public int count = 0;
     public List<String> images = new ArrayList<>();
-    public String[] get_arrary = null;
     public ImageView img;
     public Bitmap bitmap;
     public Button left;
     public Button right;
-    public int photocount = 0;
+    public int photoCount = 0;
+    private LinearLayout container, container2;
+    public int p_count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_virus_item);
+        setContentView(R.layout.dynamic_virus_tiem);
+
+        container = (LinearLayout) findViewById(R.id.parent);
+
+        container2 = (LinearLayout) findViewById(R.id.second);
 
         Intent intent = getIntent();
-
         String keynum = intent.getStringExtra("VirusKey");
-        t1 = findViewById(R.id.v_target_name);
-        t2 = findViewById(R.id.v_what_dmg);
-        t3 = findViewById(R.id.v_prev);
         img = findViewById(R.id.v_img);
         left = findViewById(R.id.v_left);
         right = findViewById(R.id.v_right);
 
         try {
-            URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=&apiKey="
-                    + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keynum);
-
-            //스트림 역할하여 데이터 읽어오기 : 인터넷 작업은 반드시 퍼미션 작성해야함.
-            //별도의 Thread 객체 생성
-            XmlFeedTask task = new XmlFeedTask();
-            task.execute(url);
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=&apiKey="
+                        + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keynum);
+                //스트림 역할하여 데이터 읽어오기 : 인터넷 작업은 반드시 퍼미션 작성해야함.
+                //별도의 Thread 객체 생성
+                XmlFeedTask task = new XmlFeedTask();
+                task.execute(url);
             //doInBackground()메소드가 발동[thread의 start()와 같은 역할]
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-        t2.setMovementMethod(new ScrollingMovementMethod());
-        t3.setMovementMethod(new ScrollingMovementMethod());
     }
 
-    class XmlFeedTask extends AsyncTask<URL, Void, String> {
+    class XmlFeedTask extends AsyncTask<URL, String, String> {
         private String[] arrays = null;
         @Override
         protected String doInBackground(URL... urls) {
@@ -95,25 +95,21 @@ public class VirusItemActivity extends AppCompatActivity {
                             break;
                         case XmlPullParser.START_TAG:
                             tagName = xpp.getName();
-                            if (tagName.equals("preventionMethod")) {
+                            if(tagName.equals("sickNameKor")) {
                                 xpp.next();
-                                prev = xpp.getText();
-                                Log.e("테스트",prev);
+                                name = stripHtml(xpp.getText());
+                            }else if (tagName.equals("preventionMethod")) {
+                                xpp.next();
+                                prev = stripHtml(xpp.getText());
                             }else if(tagName.equals("image")){
                                 xpp.next();
                                 tag_url = xpp.getText(); count++;
-                                if(count<=7) {
-                                    images.add(tag_url);
-                                    //Log.e("크기", "size is : " + images.size());
-                                }
+                                images.add(tag_url);
                             }else if(tagName.equals("symptoms")){
                                 xpp.next();
-                                dmg = xpp.getText();
-                            }else if(tagName.equals("sickNameKor")){
-                                xpp.next();
-                                t1.setText(xpp.getText()+ " 어떤 병인가요?");
+                                dmg = stripHtml(xpp.getText());
                             }
-                            break;
+//                            break;
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
@@ -133,44 +129,53 @@ public class VirusItemActivity extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
-            if(dmg !=null) {
-                t2.setText(stripHtml(dmg));
-            } else {
-                t2.setText("정확한 피해 현상이 없습니다.");
-            }
-            if(prev!= null) {
-                t3.setText(stripHtml(prev));
-            } else {
-                t3.setText("정확한 예방 정보가 없습니다.");
-            }
             arrays = images.toArray(new String[images.size()]);
             new LoadImage().execute(arrays[0]);
+            p_count = arrays.length - 1;
 
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(photocount < 6) {
-                        photocount++;
-                        new LoadImage().execute(arrays[photocount]);
-                    }else if(photocount == 6){
+                    if(photoCount == p_count) {
                         Toast.makeText(VirusItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    } else {
+                        photoCount++;
+                        new LoadImage().execute(arrays[photoCount]);
                     }
                 }
             });
             left.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(0 < photocount && photocount <= 6 ) {
-                        photocount--;
-                        new LoadImage().execute(arrays[photocount]);
-                    }else if(photocount == 0){
+                    if(photoCount == 0) {
                         Toast.makeText(VirusItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    } else {
+                        photoCount--;
+                        new LoadImage().execute(arrays[photoCount]);
                     }
                 }
             });
+            publishProgress(name,dmg,prev);
             return "파싱 완료";
         }
 
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            CreateTextView_T(values[0]);
+            CreateTextView_What_Dmg();
+            if(values[1]!=null)
+                CreateTextView(values[1]);
+            else
+                CreateTextView_Non_Dmg();
+            CreateTextView_How_Prev();
+            if(values[2]!=null)
+                CreateTextView2(values[2]);
+            else
+                CreateTextView_Non_Prev();
+            What_Pesticides();
+            from();
+        }
     }
 
     class LoadImage extends AsyncTask<String, String, Bitmap> {
@@ -199,6 +204,126 @@ public class VirusItemActivity extends AppCompatActivity {
 
     public String stripHtml(String html) {
         return Html.fromHtml(html).toString();
+    }
+
+    public void CreateTextView_T(String a) {
+        TextView view = new TextView(this);
+        view.setText(a);
+        view.setTextSize(15);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        lp.topMargin = 15;
+        lp.bottomMargin = 15;
+        view.setLayoutParams(lp);
+
+        container.addView(view);
+    }
+
+    public void CreateTextView_What_Dmg() {
+        TextView view = new TextView(this);
+        view.setText("어떤 피해를 발생시키나요??");
+        view.setTextSize(14);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        view.setLayoutParams(lp);
+        lp.topMargin=20;
+        lp.bottomMargin=30;
+        container.addView(view);
+    }
+    public void CreateTextView(String a) {
+        TextView view = new TextView(this);
+        view.setText(a);
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+        view.setLineSpacing(0, 1.2f);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin=30;
+        lp.rightMargin=30;
+        view.setLayoutParams(lp);
+        container.addView(view);
+    }
+    public void CreateTextView_How_Prev() {
+        TextView view = new TextView(this);
+        view.setText("어떻게 예방하나요??");
+        view.setTextSize(14);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        view.setLayoutParams(lp);
+        lp.bottomMargin=30;
+        container2.addView(view);
+    }
+    public void CreateTextView2(String a) {
+        TextView view = new TextView(this);
+        view.setText(a);
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+        view.setLineSpacing(0, 1.2f);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin=30;
+        lp.rightMargin=30;
+        lp.bottomMargin=50;
+        view.setLayoutParams(lp);
+        container2.addView(view);
+    }
+    public void CreateTextView_Non_Dmg() {
+        TextView view = new TextView(this);
+        view.setText("정확한 피해 현상이 없습니다.");
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        view.setLayoutParams(lp);
+        container2.addView(view);
+    }
+    public void CreateTextView_Non_Prev() {
+        TextView view = new TextView(this);
+        view.setText("정확한 예방 정보가 없습니다.");
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        view.setLayoutParams(lp);
+        container2.addView(view);
+    }
+    public void What_Pesticides(){
+        TextView view = new TextView(this);
+        view.setText("어떤 약을 써야하나요?");
+        view.setTextSize(15);
+        view.setTextColor(Color.BLACK);
+
+        TextView view1 = new TextView(this);
+        view1.setText("준비 중입니다..");
+        view1.setTextSize(12);
+        view1.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        lp.bottomMargin=50;
+        view.setLayoutParams(lp);
+        view1.setLayoutParams(lp);
+        container2.addView(view);
+        container2.addView(view1);
+    }
+    public void from(){
+        TextView view = new TextView(this);
+        view.setText("출처 : 농촌진흥청");
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.END;
+        view.setLayoutParams(lp);
+        container2.addView(view);
     }
 }
 

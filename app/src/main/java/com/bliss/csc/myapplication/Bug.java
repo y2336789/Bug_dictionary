@@ -8,7 +8,6 @@ public class Bug {
     String insectKey;
 
     public Bug(){
-
     }
 
     public Bug(String name,String imgUrl, String species, String cropName, String insectKey) {

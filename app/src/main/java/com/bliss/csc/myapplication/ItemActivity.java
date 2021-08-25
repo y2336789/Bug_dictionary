@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,12 +31,12 @@ public class ItemActivity extends AppCompatActivity {
     public String tag_url = null;
     public int count = 0;
     public List<String> images = new ArrayList<>();
-    public String[] get_arrary = null;
     public ImageView img;
     public Bitmap bitmap;
     public Button left;
     public Button right;
     public int photocount = 0;
+    public int p_count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +106,7 @@ public class ItemActivity extends AppCompatActivity {
                             }else if(tagName.equals("image")){
                                 xpp.next();
                                 tag_url = xpp.getText(); count++;
-                                if(count<=7) {
-                                    images.add(tag_url);
-                                    //Log.e("크기", "size is : " + images.size());
-                                }
+                                images.add(tag_url);
                             }else if(tagName.equals("insectFamily")){
                                 xpp.next();
                             }else if(tagName.equals("damageInfo")){
@@ -159,28 +155,28 @@ public class ItemActivity extends AppCompatActivity {
                 t5.setText("정확한 생태 정보가 없습니다.");
             }
             arrays = images.toArray(new String[images.size()]);
-            Log.e("최종 크기", "size is " + this.arrays.length);
             new LoadImage().execute(arrays[0]);
+            p_count = arrays.length - 1;
 
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(photocount < 6) {
+                    if(photocount == p_count) {
+                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    } else {
                         photocount++;
                         new LoadImage().execute(arrays[photocount]);
-                    }else if(photocount == 6){
-                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
             left.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(0 < photocount && photocount <= 6 ) {
+                    if(photocount == 0) {
+                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                    } else {
                         photocount--;
                         new LoadImage().execute(arrays[photocount]);
-                    }else if(photocount == 0){
-                        Toast.makeText(ItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

@@ -66,6 +66,7 @@ public class VirusAdapter extends RecyclerView.Adapter{
             sickCropName=itemView.findViewById(R.id.sickCropName);
             sickIv=itemView.findViewById(R.id.sickIv);
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
