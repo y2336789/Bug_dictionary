@@ -3,7 +3,6 @@ package com.bliss.csc.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,34 +23,24 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     public String key = "20218f5922b84a6b4691db8472132ececb19";
     RecyclerView recyclerView;
     ArrayList<Bug> bugs = new ArrayList<>();
     MyAdapter adapter;
-
-    String this_name, parse_name;
-
+    String this_name;
     TextView textView;
     String[] crop_names = {"사과", "복숭아", "배", "포도","밤"};
-    Button btn, btn1;
-
-
+    Button btn, btn1, btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         recyclerView = findViewById(R.id.recycler);
-
         adapter = new MyAdapter(bugs, this);
         recyclerView.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
-//        readRss();
 
         // 스피너 설정 코드
         textView =findViewById(R.id.testing);
@@ -75,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 주의 버튼
-        btn = findViewById(R.id.cauton_btn);
+        btn = findViewById(R.id.caution_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,13 +72,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        btn1 = findViewById(R.id.go_sick);
+        // 경고 버튼
+        btn1 = findViewById(R.id.warning_btn);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, SecondActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, WarnActivity.class);
                 startActivity(intent1);
+            }
+        });
+
+        btn2 = findViewById(R.id.go_sick);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent2);
             }
         });
     }
