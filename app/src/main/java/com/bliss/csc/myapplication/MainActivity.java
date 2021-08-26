@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Bug> bugs = new ArrayList<>();
     MyAdapter adapter;
     String this_name;
-    String[] crop_names = {"사과", "복숭아", "배", "포도","밤", "블루베리"};
+    String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리"};
     Button btn, btn1, btn2;
 
     @Override
@@ -77,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
-
+        // 병 리스트 버튼
         btn2 = findViewById(R.id.go_sick);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, SecondActivity.class);
+                Intent intent2 = new Intent(MainActivity.this, VirusActivity.class);
                 startActivity(intent2);
             }
         });
@@ -169,6 +169,34 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }else if(cropName.equals("참다래(키위,다래)")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%B0%B8%EB%8B%A4%EB%9E%98&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("무화과")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%AC%B4%ED%99%94%EA%B3%BC&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -224,19 +252,12 @@ public class MainActivity extends AppCompatActivity {
                                     bugs.add(bug);
                                     bug=null;
                                 }
-                                // Recycler Apdater에 데이터가 변경되었다고 통지
                                 publishProgress();
                             }
                             break;
                     }
                     eventType = xpp.next();
-                }// while
-
-                //파싱 작업이 완료되었다!!
-                //테스트로 Toast로 보여주기, 단 별도 스레드는
-                //UI작업이 불가! 그래서 runOnUiThread()를 이용했었음.
-                //이 UI작업을 하는 별도의 메소드로
-                //결과를 리턴하는 방식을 사용
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -251,17 +272,9 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyItemInserted(bugs.size());
         }
         @Override
-        protected void onPostExecute(String s) { //매개 변수 s에 들어오는 값음 doIBackground()의 return 값이다.
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            //리사이클러에서 보여주는 데이터를 가진
-            //아답터에게 데이터가 변경되었다고 공지
-//            adapter.notifyDataSetChanged();
-            //이 메소드 안에서는 UI변경 작업 가능
             Toast.makeText(MainActivity.this, s+":"+bugs.size(), Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 }

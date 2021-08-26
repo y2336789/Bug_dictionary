@@ -15,15 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -33,18 +28,16 @@ import java.util.List;
 
 public class VirusItemActivity extends AppCompatActivity {
 
-    public String name, dmg, prev;
-    public String key = "20218f5922b84a6b4691db8472132ececb19";
-    public String tag_url;
-    public int count = 0;
-    public List<String> images = new ArrayList<>();
-    public ImageView img;
-    public Bitmap bitmap;
-    public Button left;
-    public Button right;
-    public int photoCount = 0;
-    private LinearLayout container, container2;
-    public int p_count = 0;
+    private String name, dmg, prev, tag_url;
+    private String key = "20218f5922b84a6b4691db8472132ececb19";
+    private int count = 0;
+    private int photoCount = 0;
+    private int p_count = 0;
+    private List<String> images = new ArrayList<>();
+    private ImageView img;
+    private Bitmap bitmap;
+    private Button left, right;
+    private LinearLayout container, container2, container3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +45,8 @@ public class VirusItemActivity extends AppCompatActivity {
         setContentView(R.layout.dynamic_virus_tiem);
 
         container = (LinearLayout) findViewById(R.id.parent);
-
         container2 = (LinearLayout) findViewById(R.id.second);
+        container3 = (LinearLayout) findViewById(R.id.UpTitle);
 
         Intent intent = getIntent();
         String keynum = intent.getStringExtra("VirusKey");
@@ -62,13 +55,10 @@ public class VirusItemActivity extends AppCompatActivity {
         right = findViewById(R.id.v_right);
 
         try {
-                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=&apiKey="
-                        + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keynum);
-                //스트림 역할하여 데이터 읽어오기 : 인터넷 작업은 반드시 퍼미션 작성해야함.
-                //별도의 Thread 객체 생성
-                XmlFeedTask task = new XmlFeedTask();
-                task.execute(url);
-            //doInBackground()메소드가 발동[thread의 start()와 같은 역할]
+            URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=&apiKey="
+                    + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keynum);
+            XmlFeedTask task = new XmlFeedTask();
+            task.execute(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -109,7 +99,6 @@ public class VirusItemActivity extends AppCompatActivity {
                                 xpp.next();
                                 dmg = stripHtml(xpp.getText());
                             }
-//                            break;
                         case XmlPullParser.TEXT:
                             break;
                         case XmlPullParser.END_TAG:
@@ -121,9 +110,7 @@ public class VirusItemActivity extends AppCompatActivity {
                             break;
                     }
                     eventType = xpp.next();
-                }// while
-
-                //파싱 작업 끝
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
@@ -148,7 +135,7 @@ public class VirusItemActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(photoCount == 0) {
-                        Toast.makeText(VirusItemActivity.this, "마지막 사진입니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VirusItemActivity.this, "첫번째 사진입니다", Toast.LENGTH_SHORT).show();
                     } else {
                         photoCount--;
                         new LoadImage().execute(arrays[photoCount]);
@@ -156,13 +143,15 @@ public class VirusItemActivity extends AppCompatActivity {
                 }
             });
             publishProgress(name,dmg,prev);
-            return "파싱 완료";
+            return null;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             CreateTextView_T(values[0]);
+            WhatIs();
+            sub();
             CreateTextView_What_Dmg();
             if(values[1]!=null)
                 CreateTextView(values[1]);
@@ -205,25 +194,48 @@ public class VirusItemActivity extends AppCompatActivity {
     public String stripHtml(String html) {
         return Html.fromHtml(html).toString();
     }
-
-    public void CreateTextView_T(String a) {
+    private void CreateTextView_T(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(15);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
-        lp.topMargin = 15;
-        lp.bottomMargin = 15;
+        lp.topMargin = 25;
+        lp.leftMargin = 35;
+        lp.rightMargin = 25;
         view.setLayoutParams(lp);
-
-        container.addView(view);
+        container3.addView(view);
     }
-
-    public void CreateTextView_What_Dmg() {
+    private void WhatIs() {
         TextView view = new TextView(this);
-        view.setText("어떤 피해를 발생시키나요??");
+        view.setText("어떤 병인가요?");
+        view.setTextSize(15);
+        view.setTextColor(Color.GRAY);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        lp.topMargin = 25;
+        view.setLayoutParams(lp);
+        container3.addView(view);
+    }
+    private void sub() {
+        TextView view = new TextView(this);
+        view.setText("작물별 피해증상, 예방방법을 확인하세요");
+        view.setTextSize(12);
+        view.setTextColor(Color.GRAY);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin = 35;
+        lp.bottomMargin = 50;
+        view.setLayoutParams(lp);
+        container.addView(view);
+
+    }
+    private void CreateTextView_What_Dmg() {
+        TextView view = new TextView(this);
+        view.setText("I. 어떤 피해를 발생시키나요??");
         view.setTextSize(14);
         view.setTextColor(Color.BLACK);
 
@@ -234,7 +246,7 @@ public class VirusItemActivity extends AppCompatActivity {
         lp.bottomMargin=30;
         container.addView(view);
     }
-    public void CreateTextView(String a) {
+    private void CreateTextView(String a) {
         TextView view = new TextView(this);
         view.setText(a);
         view.setTextSize(12);
@@ -247,9 +259,9 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setLayoutParams(lp);
         container.addView(view);
     }
-    public void CreateTextView_How_Prev() {
+    private void CreateTextView_How_Prev() {
         TextView view = new TextView(this);
-        view.setText("어떻게 예방하나요??");
+        view.setText("Ⅱ. 어떻게 예방하나요??");
         view.setTextSize(14);
         view.setTextColor(Color.BLACK);
 
@@ -259,7 +271,7 @@ public class VirusItemActivity extends AppCompatActivity {
         lp.bottomMargin=30;
         container2.addView(view);
     }
-    public void CreateTextView2(String a) {
+    private void CreateTextView2(String a) {
         TextView view = new TextView(this);
         view.setText(a);
         view.setTextSize(12);
@@ -273,7 +285,7 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setLayoutParams(lp);
         container2.addView(view);
     }
-    public void CreateTextView_Non_Dmg() {
+    private void CreateTextView_Non_Dmg() {
         TextView view = new TextView(this);
         view.setText("정확한 피해 현상이 없습니다.");
         view.setTextSize(12);
@@ -284,7 +296,7 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setLayoutParams(lp);
         container2.addView(view);
     }
-    public void CreateTextView_Non_Prev() {
+    private void CreateTextView_Non_Prev() {
         TextView view = new TextView(this);
         view.setText("정확한 예방 정보가 없습니다.");
         view.setTextSize(12);
@@ -295,9 +307,9 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setLayoutParams(lp);
         container2.addView(view);
     }
-    public void What_Pesticides(){
+    private void What_Pesticides(){
         TextView view = new TextView(this);
-        view.setText("어떤 약을 써야하나요?");
+        view.setText("Ⅲ. 어떤 약을 써야하나요?");
         view.setTextSize(15);
         view.setTextColor(Color.BLACK);
 
@@ -314,7 +326,7 @@ public class VirusItemActivity extends AppCompatActivity {
         container2.addView(view);
         container2.addView(view1);
     }
-    public void from(){
+    private void from(){
         TextView view = new TextView(this);
         view.setText("출처 : 농촌진흥청");
         view.setTextSize(12);

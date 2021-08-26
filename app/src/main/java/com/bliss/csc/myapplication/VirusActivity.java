@@ -20,15 +20,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class SecondActivity extends AppCompatActivity {
+public class VirusActivity extends AppCompatActivity {
 
     public String key = "20218f5922b84a6b4691db8472132ececb19";
     RecyclerView recyclerView;
     ArrayList<Virus> viruses = new ArrayList<>();
     VirusAdapter adapter;
     String this_name;
-    TextView textView;
-    String[] crop_names = {"사과", "복숭아", "배", "포도","밤"};
+    String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +35,11 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         recyclerView = findViewById(R.id.s_recycler);
-
         adapter = new VirusAdapter(viruses, this);
         recyclerView.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        textView =findViewById(R.id.s_testing);
         Spinner spinner =findViewById(R.id.s_select_crop);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -54,12 +50,11 @@ public class SecondActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(crop_names[position]);
                 readRss(crop_names[position]);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                textView.setText("");
+
             }
         });
     }
@@ -131,6 +126,48 @@ public class SecondActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }else if(cropName.equals("블루베리")){
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%B8%94%EB%A3%A8%EB%B2%A0%EB%A6%AC&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC01&serviceType=AA001&sickKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("참다래(키위,다래)")){
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%B0%B8%EB%8B%A4%EB%9E%98&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC01&serviceType=AA001&sickKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(cropName.equals("무화과")){
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EB%AC%B4%ED%99%94%EA%B3%BC&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC01&serviceType=AA001&sickKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -190,13 +227,6 @@ public class SecondActivity extends AppCompatActivity {
                     }
                     eventType = xpp.next();
                 }// while
-
-                //파싱 작업이 완료되었다!!
-                //테스트로 Toast로 보여주기, 단 별도 스레드는
-                //UI작업이 불가! 그래서 runOnUiThread()를 이용했었음.
-                //이 UI작업을 하는 별도의 메소드로
-                //결과를 리턴하는 방식을 사용
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
@@ -214,12 +244,7 @@ public class SecondActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) { //매개 변수 s에 들어오는 값음 doIBackground()의 return 값이다.
             super.onPostExecute(s);
-
-            //리사이클러에서 보여주는 데이터를 가진
-            //아답터에게 데이터가 변경되었다고 공지
-//            adapter.notifyDataSetChanged();
-            //이 메소드 안에서는 UI변경 작업 가능
-            Toast.makeText(SecondActivity.this, s + ":" + viruses.size(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(VirusActivity.this, s + ":" + viruses.size(), Toast.LENGTH_SHORT).show();
         }
     }
 }

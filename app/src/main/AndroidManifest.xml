@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CautionActivity"></activity>
-        <activity android:name=".SecondActivity"></activity>
+        <activity android:name=".VirusActivity"></activity>
         <activity android:name=".WarnActivity"></activity>
         <activity android:name=".OldCautionActivity"></activity>
         <activity android:name=".VirusItemActivity"></activity>
