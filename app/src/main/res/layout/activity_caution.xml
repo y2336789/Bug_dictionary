@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이번 달에 조심해야할 병해충들이에요"
+            android:text="이번 달에 주의해야할 병해충들이에요"
             android:textSize="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
@@ -21,7 +21,7 @@
             android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전환"/>
+            android:text="병 리스트로 전환"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

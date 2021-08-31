@@ -200,7 +200,7 @@ public class VirusActivity extends AppCompatActivity {
                             } else if (tagName.equals("sickNameKor")) {
                                 xpp.next();
                                 if (virus != null) virus.setName(xpp.getText());
-                            } else if (tagName.equals("oriImg")) {
+                            } else if (tagName.equals("thumbImg")) {
                                 xpp.next();
                                 if (virus != null) virus.setImgUrl(xpp.getText());
                             } else if (tagName.equals("cropName")) {

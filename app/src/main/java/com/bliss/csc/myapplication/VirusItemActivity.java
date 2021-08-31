@@ -90,14 +90,22 @@ public class VirusItemActivity extends AppCompatActivity {
                                 name = stripHtml(xpp.getText());
                             }else if (tagName.equals("preventionMethod")) {
                                 xpp.next();
-                                prev = stripHtml(xpp.getText());
+                                if(xpp.getText() == null) {
+                                    break;
+                                }else {
+                                    prev = stripHtml(xpp.getText());
+                                }
+                            }else if(tagName.equals("symptoms")){
+                                xpp.next();
+                                if(xpp.getText() == null) {
+                                    break;
+                                }else {
+                                    dmg = stripHtml(xpp.getText());
+                                }
                             }else if(tagName.equals("image")){
                                 xpp.next();
                                 tag_url = xpp.getText(); count++;
                                 images.add(tag_url);
-                            }else if(tagName.equals("symptoms")){
-                                xpp.next();
-                                dmg = stripHtml(xpp.getText());
                             }
                         case XmlPullParser.TEXT:
                             break;
@@ -142,6 +150,7 @@ public class VirusItemActivity extends AppCompatActivity {
                     }
                 }
             });
+
             publishProgress(name,dmg,prev);
             return null;
         }
@@ -149,21 +158,23 @@ public class VirusItemActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+
             CreateTextView_T(values[0]);
             WhatIs();
             sub();
             CreateTextView_What_Dmg();
-            if(values[1]!=null)
+            if(dmg == null)
+              CreateTextView_Non_Dmg();
+            else
                 CreateTextView(values[1]);
-            else
-                CreateTextView_Non_Dmg();
             CreateTextView_How_Prev();
-            if(values[2]!=null)
-                CreateTextView2(values[2]);
-            else
+            if(prev == null)
                 CreateTextView_Non_Prev();
+            else
+                CreateTextView2(values[2]);
             What_Pesticides();
             from();
+
         }
     }
 
@@ -240,10 +251,10 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
         view.setLayoutParams(lp);
         lp.topMargin=20;
-        lp.bottomMargin=30;
+        lp.bottomMargin=10;
+        lp.leftMargin=35;
         container.addView(view);
     }
     private void CreateTextView(String a) {
@@ -266,9 +277,9 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
         view.setLayoutParams(lp);
-        lp.bottomMargin=30;
+        lp.bottomMargin=10;
+        lp.leftMargin=35;
         container2.addView(view);
     }
     private void CreateTextView2(String a) {
@@ -292,9 +303,11 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        lp.topMargin=20;
+        lp.bottomMargin=10;
+        lp.leftMargin=35;
         view.setLayoutParams(lp);
-        container2.addView(view);
+        container.addView(view);
     }
     private void CreateTextView_Non_Prev() {
         TextView view = new TextView(this);
@@ -303,7 +316,9 @@ public class VirusItemActivity extends AppCompatActivity {
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        lp.topMargin=20;
+        lp.bottomMargin=10;
+        lp.leftMargin=35;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
@@ -319,8 +334,9 @@ public class VirusItemActivity extends AppCompatActivity {
         view1.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
-        lp.bottomMargin=50;
+        lp.topMargin=20;
+        lp.bottomMargin=10;
+        lp.leftMargin=35;
         view.setLayoutParams(lp);
         view1.setLayoutParams(lp);
         container2.addView(view);

@@ -49,9 +49,11 @@ public class CautionActivity extends AppCompatActivity {
                 if(num==0){
                     num = 1;
                     changeView();
+                    button1.setText("해충 리스트로 전환");
                 }else if(num ==1){
                     num = 0;
                     originalView();
+                    button1.setText("병 리스트로 전환");
                 }
 
             }
@@ -147,6 +149,15 @@ public class CautionActivity extends AppCompatActivity {
         bugs_3.add(bug);
     }
     private void changeView(){
+        // 식량작물
+        virusAdapter = new VirusAdapter(virus_1, this);
+        recyclerView.setAdapter(virusAdapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+//        v_addItem1()
+
         // 채 소
         virusAdapter2 = new VirusAdapter(virus_2, this);
         recyclerView2.setAdapter(virusAdapter2);
@@ -158,7 +169,20 @@ public class CautionActivity extends AppCompatActivity {
                 "가지","D00000018");
         v_addItem2("역병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=D00000198003[201010190000000]_tmb.jpg",
                 "고추", "D00000198");
-
+        v_addItem2("탄저병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=고추_병_탄저병_열매_피해증상_4[20210111164102868]_tmb.jpg",
+                "고추", "D00000195");
+        v_addItem2("역병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=img_0925_222[20160805153144502]_tmb.jpg",
+                "딸기", "D00000452");
+        v_addItem2("역병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=D00000717002[201010190000000]_tmb.jpg",
+                "배추", "D00000717");
+        v_addItem2("역병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=img_0925_214[20160805160142478]_tmb.jpg",
+                "시금치", "D00001055");
+        v_addItem2("모자이크병", "http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=D00001152004[201010190000000]_tmb.jpg",
+                "오이", "D00001152");
+        v_addItem2("역병","http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=D00001165002[201010190000000]_tmb.jpg",
+                "오이","D00001165");
+        v_addItem2("반점위조바이러스","http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=토마토_토마토 초기 신초 괴사_1[20180404133301218]_tmb.jpg",
+                "토마토", "D00004251");
 
         // 과수
         virusAdapter3 = new VirusAdapter(virus_3, this);
@@ -189,6 +213,8 @@ public class CautionActivity extends AppCompatActivity {
                 "포도", "D00004218");
     }
     private void originalView(){
+        adapter = new MyAdapter(bugs, this);
+        recyclerView.setAdapter(adapter);
 
         adapter2 = new MyAdapter(bugs_2, this);
         recyclerView2.setAdapter(adapter2);
@@ -196,6 +222,15 @@ public class CautionActivity extends AppCompatActivity {
         adapter3 = new MyAdapter(bugs_3, this);
         recyclerView3.setAdapter(adapter3);
 
+    }
+    private void v_addItem1(String name, String imgUrl, String target, String virusKey) {
+        Virus virus = new Virus();
+
+        virus.setName(name);
+        virus.setImgUrl(imgUrl);
+        virus.setTarget(target);
+        virus.setVirusKey(virusKey);
+        virus_1.add(virus);
     }
     private void v_addItem2(String name, String imgUrl, String target, String virusKey) {
         Virus virus = new Virus();
