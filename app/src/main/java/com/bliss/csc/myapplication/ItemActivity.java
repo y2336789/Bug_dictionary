@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemActivity extends AppCompatActivity {
-    public String name, gen, spe, fam, ord, dmg, eco, tag_url;
+    public String name, gen, spe, fam, ord, dmg, eco, tag_url, prevent;
     public String key = "20218f5922b84a6b4691db8472132ececb19";
     public int count = 0;
     public int photoCount = 0;
@@ -105,6 +105,11 @@ public class ItemActivity extends AppCompatActivity {
                                 xpp.next();
                             }else if(tagName.equals("preventMethod")){
                                 xpp.next();
+                                if(xpp.getText() == null){
+                                    break;
+                                }else {
+                                    prevent = stripHtml(xpp.getText());
+                                }
                             }else if (tagName.equals("insectOrder")) {
                                 xpp.next();
                                 if(xpp.getText() == null){
@@ -174,7 +179,7 @@ public class ItemActivity extends AppCompatActivity {
                 }
             });
 
-            publishProgress(name, gen, spe, fam, ord, dmg, eco);
+            publishProgress(name, gen, spe, fam, ord, dmg, eco, prevent);
 
             return null;
         }
@@ -199,6 +204,11 @@ public class ItemActivity extends AppCompatActivity {
                 CreateTextView2(values[6]);
             else
                 CreateTextView_Non_info();
+            CreateTextView_subTitle2("Ⅵ. 어떻게 방제하나요?");
+            if(prevent != null)
+                CreateTextView2(values[7]);
+            else
+                CreateTextView_Non_prevent();
             What_Pesticides();
             from();
         }
@@ -341,13 +351,14 @@ public class ItemActivity extends AppCompatActivity {
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin=30;
+        lp.bottomMargin=50;
         lp.rightMargin=30;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
     private void What_Pesticides(){
         TextView view = new TextView(this);
-        view.setText("Ⅵ. 어떤 약을 써야하나요?");
+        view.setText("Ⅶ. 어떤 약을 써야하나요?");
         view.setTextSize(14);
         view.setTextColor(Color.BLACK);
 
@@ -390,6 +401,17 @@ public class ItemActivity extends AppCompatActivity {
     private void CreateTextView_Non_info() {
         TextView view = new TextView(this);
         view.setText("정확한 생태 정보가 없습니다..");
+        view.setTextSize(12);
+        view.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        view.setLayoutParams(lp);
+        container2.addView(view);
+    }
+    private void CreateTextView_Non_prevent() {
+        TextView view = new TextView(this);
+        view.setText("정확한 방제 정보가 없습니다..");
         view.setTextSize(12);
         view.setTextColor(Color.BLACK);
 

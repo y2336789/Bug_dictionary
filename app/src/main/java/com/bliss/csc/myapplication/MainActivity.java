@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // 경고 버튼
+        // 예보 버튼
         btn1 = findViewById(R.id.warning_btn);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
