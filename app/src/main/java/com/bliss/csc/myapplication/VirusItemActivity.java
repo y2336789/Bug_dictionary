@@ -34,6 +34,7 @@ public class VirusItemActivity extends AppCompatActivity {
     private int photoCount = 0;
     private int p_count = 0;
     private List<String> images = new ArrayList<>();
+    private String default_image;
     private ImageView img;
     private Bitmap bitmap;
     private Button left, right;
@@ -104,7 +105,8 @@ public class VirusItemActivity extends AppCompatActivity {
                                 }
                             }else if(tagName.equals("image")){
                                 xpp.next();
-                                tag_url = xpp.getText(); count++;
+                                tag_url = xpp.getText();
+                                count++;
                                 images.add(tag_url);
                             }
                         case XmlPullParser.TEXT:
@@ -124,10 +126,10 @@ public class VirusItemActivity extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
+
             arrays = images.toArray(new String[images.size()]);
             new LoadImage().execute(arrays[0]);
             p_count = arrays.length - 1;
-
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -154,6 +156,7 @@ public class VirusItemActivity extends AppCompatActivity {
             publishProgress(name,dmg,prev);
             return null;
         }
+
 
         @Override
         protected void onProgressUpdate(String... values) {
