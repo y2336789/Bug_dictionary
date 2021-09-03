@@ -34,7 +34,6 @@ public class VirusItemActivity extends AppCompatActivity {
     private int photoCount = 0;
     private int p_count = 0;
     private List<String> images = new ArrayList<>();
-    private String default_image;
     private ImageView img;
     private Bitmap bitmap;
     private Button left, right;
@@ -105,7 +104,7 @@ public class VirusItemActivity extends AppCompatActivity {
                                 }
                             }else if(tagName.equals("image")){
                                 xpp.next();
-                                tag_url = xpp.getText();
+                                tag_url = stripHtml(xpp.getText());
                                 count++;
                                 images.add(tag_url);
                             }
@@ -126,10 +125,6 @@ public class VirusItemActivity extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
-
-            arrays = images.toArray(new String[images.size()]);
-            new LoadImage().execute(arrays[0]);
-            p_count = arrays.length - 1;
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,16 +147,32 @@ public class VirusItemActivity extends AppCompatActivity {
                     }
                 }
             });
-
             publishProgress(name,dmg,prev);
             return null;
         }
-
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
 
+            if(name.equals("흰비단병")){
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=IMG_1883[20210107151426192]_wm.jpg");
+                p_count = 0;
+            }
+            else if(name.equals("겹둥근무늬병")){
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=수수_병_겹둥근무늬병_잎_피해증상_1[20210201100316446]_tmb.jpg");
+                p_count = 0;
+            }
+            else if(name.equals("바이러스병")){
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=팥_바이러스병 후기 증상[20190109165610767]_wm.jpg");
+                p_count = 0;
+            }
+            // 요 위로는 오류나는 케이스들에 대한 예외처리
+            else {
+                arrays = images.toArray(new String[images.size()]);
+                new LoadImage().execute(arrays[0]);
+                p_count = arrays.length - 1;
+            }
             CreateTextView_T(values[0]);
             WhatIs();
             sub();
@@ -195,16 +206,15 @@ public class VirusItemActivity extends AppCompatActivity {
             }
             return bitmap;
         }
-
         protected void onPostExecute(Bitmap image) {
             if(image != null){
                 img.setImageBitmap(image);
             } else {
                 Toast.makeText(VirusItemActivity.this, "이미지가 존재하지 않거나 네트워크 오류 발생", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
     }
-
     public String stripHtml(String html) {
         return Html.fromHtml(html).toString();
     }
