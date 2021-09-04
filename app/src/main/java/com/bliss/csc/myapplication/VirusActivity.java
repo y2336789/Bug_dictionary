@@ -1,5 +1,6 @@
 package com.bliss.csc.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ public class VirusActivity extends AppCompatActivity {
     private int value = 1;
     private String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감","감귤"};
     private String[] food_crops = {"논벼","보리","콩","팥","녹두","옥수수","조","수수","감자","고구마"};
+    private String[] food_vegetable = {"수박", "참외", "토마토", "딸기", "메론", "오이", "호박", "가지", "고추", "배추", "양배추", "상추"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class VirusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         button1 = findViewById(R.id.virus_food_crop);
         button2 = findViewById(R.id.virus_fruit);
+        button3 = findViewById(R.id.virus_vegetable);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +62,17 @@ public class VirusActivity extends AppCompatActivity {
                 else {
                     value = 2;
                     changeView2();
+                }
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(value == 3)
+                    return;
+                else {
+                    value = 3;
+                    changeView3();
                 }
             }
         });
@@ -231,6 +245,8 @@ public class VirusActivity extends AppCompatActivity {
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
+
     void readRss2(String cropName) {
         if(cropName.equals("사과")) {
             this_name = cropName;
@@ -382,6 +398,166 @@ public class VirusActivity extends AppCompatActivity {
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
+
+    void readRss3(String cropName) {
+        if(cropName.equals("수박")) {
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=수박&insectKorName=&apiKey="
+                + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("참외")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=참외&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("토마토")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=토마토&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("딸기")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=딸기&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("메론")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=메론&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("오이")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=오이&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("호박")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=호박&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("가지")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=가지&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("고추")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=고추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("배추")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=배추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("양배추")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=양배추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+        else if(cropName.equals("상추")){
+            this_name = cropName;
+            viruses.clear();
+            adapter.notifyDataSetChanged();
+            try{
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=상추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                RssFeedTask task = new RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 
     class RssFeedTask extends AsyncTask<URL, Void, String> {
         @Override
@@ -494,10 +670,26 @@ public class VirusActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 readRss2(crop_names[position]);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+    private void changeView3() {
+        Spinner spinner = findViewById(R.id.s_select_crop);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, food_vegetable);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                readRss3(food_vegetable[position]);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }

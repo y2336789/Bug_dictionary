@@ -28,7 +28,7 @@ import java.util.List;
 
 public class VirusItemActivity extends AppCompatActivity {
 
-    private String name, dmg, prev, tag_url;
+    private String name, dmg, prev, tag_url, keyNum;
     private String key = "20218f5922b84a6b4691db8472132ececb19";
     private int count = 0;
     private int photoCount = 0;
@@ -49,14 +49,14 @@ public class VirusItemActivity extends AppCompatActivity {
         container3 = (LinearLayout) findViewById(R.id.UpTitle);
 
         Intent intent = getIntent();
-        String keynum = intent.getStringExtra("VirusKey");
+        keyNum = intent.getStringExtra("VirusKey");
         img = findViewById(R.id.v_img);
         left = findViewById(R.id.v_left);
         right = findViewById(R.id.v_right);
 
         try {
             URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=&apiKey="
-                    + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keynum);
+                    + key + "&serviceCode=SVC05&serviceType=AA001&sickKey=" + keyNum);
             XmlFeedTask task = new XmlFeedTask();
             task.execute(url);
         } catch (MalformedURLException e) {
@@ -165,6 +165,31 @@ public class VirusItemActivity extends AppCompatActivity {
             }
             else if(name.equals("바이러스병")){
                 new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=팥_바이러스병 후기 증상[20190109165610767]_wm.jpg");
+                p_count = 0;
+            }
+            else if(name.equals("황화잎말림바이러스")) {
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=토마토황화잎말림병(TYLCV증상)[20180502183719045]_wm.jpg");
+                p_count = 0;
+            }
+            // 오이 노균병
+            else if(name.equals("노균병") && keyNum.equals("D00001166")){
+                arrays = images.toArray(new String[images.size()]);
+                new LoadImage().execute(arrays[0]);
+                p_count = arrays.length - 1;
+            }
+            // 호박 노균병
+            else if(name.equals("노균병") && keyNum.equals("D00001731")){
+                arrays = images.toArray(new String[images.size()]);
+                new LoadImage().execute(arrays[0]);
+                p_count = arrays.length - 1;
+            }
+            // 메론 노균병
+            else if(name.equals("노균병")) {
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=멜론_초기 다각형_1[20180404100746020]_tmb.jpg");
+                p_count = 0;
+            }
+            else if(name.equals("덩굴쪼김병")) {
+                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/sickns/&imageFileName=멜론_멜론 줄기 고사 및 담홍색 곰팡이_1[20180404101234575]_tmb.jpg");
                 p_count = 0;
             }
             // 요 위로는 오류나는 케이스들에 대한 예외처리
