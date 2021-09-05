@@ -3,6 +3,8 @@ package com.bliss.csc.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,12 +25,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public String key = "20218f5922b84a6b4691db8472132ececb19";
-    RecyclerView recyclerView;
-    ArrayList<Bug> bugs = new ArrayList<>();
-    MyAdapter adapter;
-    String this_name;
-    String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감", "감귤"};
-    Button btn, btn1, btn2;
+    private RecyclerView recyclerView;
+    private ArrayList<Bug> bugs = new ArrayList<>();
+    private MyAdapter adapter;
+    private String this_name;
+    private String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감", "감귤"};
+    private String[] food_crops = {"논벼","보리","콩","팥","녹두","옥수수","조","수수","감자","고구마"};
+    private String[] food_vegetable = {"수박", "참외", "토마토", "딸기", "메론", "오이", "호박", "가지", "고추", "배추", "양배추", "상추"};
+    private Button btn, btn1, btn2, food, fruit, vegetable;
+    private int value = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinner =findViewById(R.id.select_crop);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_dropdown_item, crop_names);
+                this, android.R.layout.simple_spinner_dropdown_item, food_crops);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                readRss(crop_names[position]);
+                readRss1(food_crops[position]);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -86,18 +91,214 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+        // 식량작물 버튼
+        food = findViewById(R.id.food_crop);
+        food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(value == 1)
+                    return;
+                else {
+                    value = 1;
+                    changeView1();
+                }
+            }
+        });
+        // 과수 버튼
+        fruit = findViewById(R.id.fruit);
+        fruit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(value == 2)
+                    return;
+                else {
+                    value = 2;
+                    changeView2();
+                }
+            }
+        });
+        // 채소 버튼
+        vegetable = findViewById(R.id.vegetable);
+        vegetable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(value == 3)
+                    return;
+                else {
+                    value = 3;
+                    changeView3();
+                }
+            }
+        });
     }
+    void readRss1(String cropName){
+        if(cropName.equals("논벼")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=논벼&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("보리")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=보리&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("콩")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=콩&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("팥")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=팥&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("녹두")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=녹두&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("옥수수")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=옥수수&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("조")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=조&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("수수")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=수수&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("감자")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=감자C&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("고구마")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=고구마&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    @SuppressLint("NotifyDataSetChanged")
 
-    void readRss(String cropName) {
+    void readRss2(String cropName) {
         if(cropName.equals("사과")) {
             this_name = cropName;
-            try {
-                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
-                        + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
-                RssFeedTask task = new RssFeedTask();
-                task.execute(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=%EC%82%AC%EA%B3%BC&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
         }else if(cropName.equals("복숭아")){
             this_name = cropName;
@@ -227,6 +428,191 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
+
+    void readRss3(String cropName){
+        if(cropName.equals("수박")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=수박&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("참외")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=참외&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("토마토")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=토마토&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("딸기")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=딸기&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("메론")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=메론&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("오이")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=오이&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("호박")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=호박&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("가지")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=가지&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("고추")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=고추C&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("배추")) {
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=배추&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("양배추")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=양배추&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(cropName.equals("상추")){
+            this_name = cropName;
+            if(bugs != null) {
+                bugs.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=상추&insectKorName=&apiKey="
+                            + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
+                    RssFeedTask task = new RssFeedTask();
+                    task.execute(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    @SuppressLint("NotifyDataSetChanged")
 
     class RssFeedTask extends AsyncTask<URL, Void, String> {
         @Override
@@ -304,5 +690,59 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(MainActivity.this, s+":"+bugs.size(), Toast.LENGTH_SHORT).show();
         }
+    }
+    private void changeView1(){
+        Spinner spinner = findViewById(R.id.select_crop);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, food_crops);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                readRss1(food_crops[position]);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+    private void changeView2(){
+        Spinner spinner = findViewById(R.id.select_crop);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, crop_names);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                readRss2(crop_names[position]);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+    private void changeView3(){
+        Spinner spinner = findViewById(R.id.select_crop);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, food_vegetable);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                readRss3(food_vegetable[position]);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 }
