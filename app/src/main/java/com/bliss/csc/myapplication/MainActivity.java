@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 bugs.clear();
                 adapter.notifyDataSetChanged();
                 try {
-                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=감자C&insectKorName=&apiKey="
+                    URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=감자&insectKorName=&apiKey="
                             + key + "&serviceCode=SVC03&serviceCodeDetail=SVC07&displayCount=50&insectKey=");
                     RssFeedTask task = new RssFeedTask();
                     task.execute(url);

@@ -279,20 +279,20 @@ public class ItemActivity extends AppCompatActivity {
     private void CreateTextView_type(String a){
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(12);
+        view.setTextSize(17);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
         lp.topMargin=20;
-        lp.bottomMargin=30;
-        lp.leftMargin=35;
+        lp.bottomMargin=130;
+        lp.leftMargin=50;
         container.addView(view);
     }
     private void CreateTextView_subTitle(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(14);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -305,12 +305,14 @@ public class ItemActivity extends AppCompatActivity {
     private void CreateTextView(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
-        view.setLineSpacing(0, 1.2f);
+        view.setLineSpacing(0, 1.5f);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.leftMargin=30;
+        lp.topMargin=40;
+        lp.leftMargin=50;
+        lp.bottomMargin=100;
         lp.rightMargin=30;
         view.setLayoutParams(lp);
         container.addView(view);
@@ -318,7 +320,7 @@ public class ItemActivity extends AppCompatActivity {
     private void LooksLike() {
         TextView view = new TextView(this);
         view.setText("Ⅳ. 해당 해충은 이렇게 생겼어요!");
-        view.setTextSize(14);
+        view.setTextSize(17);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
