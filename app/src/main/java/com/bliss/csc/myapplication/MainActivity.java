@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Bug> bugs = new ArrayList<>();
     private MyAdapter adapter;
-    private String this_name;
+    private String this_name, target_name;
     private String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감", "감귤"};
     private String[] food_crops = {"논벼","보리","콩","팥","녹두","옥수수","조","수수","감자","고구마"};
     private String[] food_vegetable = {"수박", "참외", "토마토", "딸기", "메론", "오이", "호박", "가지", "고추", "배추", "양배추", "상추"};
@@ -642,10 +642,22 @@ public class MainActivity extends AppCompatActivity {
                                 bug = new Bug();
                             }else if(tagName.equals("insectKorName")){
                                 xpp.next();
-                                if(bug!=null) bug.setName(xpp.getText());
+                                if(bug!=null) {
+                                    target_name = xpp.getText();
+                                    bug.setName(xpp.getText());
+                                }
                             }else if(tagName.equals("thumbImg")){
                                 xpp.next();
-                                if(bug!=null) bug.setImgUrl(xpp.getText());
+                                if(target_name.equals("끝동매미충") & (this_name.equals("논벼"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AR0080M001[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("기장테두리진딧물") & (this_name.equals("보리"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AJ0184M001[20110106120000000]_wm.jpg");
+                                }
+//                                else if(target_name.equals("끝동매미충") & (this_name.equals("논벼"))){
+//                                    bug.setImgUrl();
+//                                }
+                                else if(bug!=null) bug.setImgUrl(xpp.getText());
                             }else if(tagName.equals("speciesName")){
                                 xpp.next();
                                 if(bug!=null) bug.setSpecies(xpp.getText());

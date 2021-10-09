@@ -37,26 +37,25 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/p_left"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/up"
                 android:rotation="180"
-                android:scaleType="center"
-                android:paddingRight="10dp"
                 style="?android:attr/borderlessButtonStyle"/>
             <ImageView
                 android:id="@+id/p_img"
-                android:layout_width="300dp"
+                android:layout_width="290dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"/>
             <Button
                 android:id="@+id/p_right"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:background="@drawable/up"
+                android:layout_marginTop="10dp"
                 style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
         <LinearLayout

@@ -190,23 +190,23 @@ public class ItemActivity extends AppCompatActivity {
             WhatIs();
             sub();
             CreateTextView_subTitle("I. 속종명");
-            CreateTextView_type(values[1] + " / " + values[2]);
+            CreateTextView_type(" -  " + values[1] + " / " + values[2]);
             CreateTextView_subTitle("Ⅱ. 목과명");
-            CreateTextView_type(values[3] + " / " + values[4]);
+            CreateTextView_type(" -  " + values[3] + " / " + values[4]);
             CreateTextView_subTitle("Ⅲ. 어떤 피해를 입히나요?");
             if(dmg != null)
-                CreateTextView(values[5]);
+                CreateTextView(" -  " + values[5]);
             else
                 CreateTextView_Non_Dmg();
             LooksLike();
-            CreateTextView_subTitle2("Ⅴ. 생태정보는 어떻게 되나요?");
+            CreateTextView_subTitle2("Ⅳ. 생태정보는 어떻게 되나요?");
             if(eco != null)
-                CreateTextView2(values[6]);
+                CreateTextView2(" -  " + values[6]);
             else
                 CreateTextView_Non_info();
-            CreateTextView_subTitle2("Ⅵ. 어떻게 방제하나요?");
+            CreateTextView_subTitle2("Ⅴ. 어떻게 방제하나요?");
             if(prevent != null)
-                CreateTextView2(values[7]);
+                CreateTextView2(" -  " + values[7]);
             else
                 CreateTextView_Non_prevent();
             What_Pesticides();
@@ -287,7 +287,7 @@ public class ItemActivity extends AppCompatActivity {
         lp.topMargin=20;
         lp.bottomMargin=130;
         lp.leftMargin=50;
-        container.addView(view);
+        container2.addView(view);
     }
     private void CreateTextView_subTitle(String a) {
         TextView view = new TextView(this);
@@ -300,7 +300,7 @@ public class ItemActivity extends AppCompatActivity {
         lp.topMargin=20;
         lp.bottomMargin=10;
         lp.leftMargin=35;
-        container.addView(view);
+        container2.addView(view);
     }
     private void CreateTextView(String a) {
         TextView view = new TextView(this);
@@ -315,18 +315,17 @@ public class ItemActivity extends AppCompatActivity {
         lp.bottomMargin=100;
         lp.rightMargin=30;
         view.setLayoutParams(lp);
-        container.addView(view);
+        container2.addView(view);
     }
     private void LooksLike() {
         TextView view = new TextView(this);
-        view.setText("Ⅳ. 해당 해충은 이렇게 생겼어요!");
+        view.setText("해당 해충은 이렇게 생겼어요!");
         view.setTextSize(17);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
-        lp.leftMargin = 35;
-        lp.topMargin = 50;
+        lp.topMargin = 10;
         view.setLayoutParams(lp);
         container.addView(view);
 
@@ -334,12 +333,12 @@ public class ItemActivity extends AppCompatActivity {
     private void CreateTextView_subTitle2(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(14);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
-        lp.topMargin=20;
+        lp.topMargin=40;
         lp.bottomMargin=30;
         lp.leftMargin=35;
         container2.addView(view);
@@ -347,26 +346,26 @@ public class ItemActivity extends AppCompatActivity {
     private void CreateTextView2(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
-        view.setLineSpacing(0, 1.2f);
+        view.setLineSpacing(0, 1.5f);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin=30;
-        lp.bottomMargin=50;
+        lp.bottomMargin=70;
         lp.rightMargin=30;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
     private void What_Pesticides(){
         TextView view = new TextView(this);
-        view.setText("Ⅶ. 어떤 약을 써야하나요?");
-        view.setTextSize(14);
+        view.setText("Ⅵ. 어떤 약을 써야하나요?");
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         TextView view1 = new TextView(this);
-        view1.setText("준비 중입니다..");
-        view1.setTextSize(12);
+        view1.setText(" -  " + "준비 중입니다..");
+        view1.setTextSize(15);
         view1.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
