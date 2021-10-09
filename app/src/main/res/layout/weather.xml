@@ -9,14 +9,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button1"
+        <TextView
+            android:id="@+id/tv00"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="MyonClick"
             android:layout_weight="1"
-            android:text="날씨 조회"
-            android:layout_margin="15dp"/>
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_margin="25dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,9 +75,20 @@
                         android:padding="0sp"
                         android:background="@android:color/transparent"
                         android:scaleType="center"/>
-
                 </LinearLayout>
+
             </HorizontalScrollView>
+            <Button
+                android:id="@+id/weather_change_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="병 리스트로 전환"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/weather_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
