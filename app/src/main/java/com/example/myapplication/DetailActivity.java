@@ -47,8 +47,14 @@ public class DetailActivity extends AppCompatActivity {
         layout = (LinearLayout)findViewById(R.id.layout);
         context = this;
 
+        intent= getIntent();
+        dist = intent.getStringExtra("code");
+        link = "https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=" + dist;
+
         Integer[] cropID = {R.drawable.crop0, R.drawable.crop1, R.drawable.crop2, R.drawable.crop3,
-                R.drawable.crop4, R.drawable.crop5, R.drawable.crop6};
+                R.drawable.crop4, R.drawable.crop5, R.drawable.crop6, R.drawable.crop7, R.drawable.crop8,
+                R.drawable.crop9, R.drawable.crop10, R.drawable.crop11, R.drawable.crop12, R.drawable.crop13,
+                R.drawable.crop14, R.drawable.crop15, R.drawable.crop16};
         Integer[] ID={-1};
 
         int i;
@@ -64,9 +70,61 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-        intent= getIntent();
-        dist = intent.getStringExtra("code");
-        link = "https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=" + dist;
+        //충북
+        if(dist.indexOf("43") == 0){
+            ImageButton img = new ImageButton(context);
+
+            img.setLayoutParams(new ViewGroup.LayoutParams(350,220));
+            img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            img.setPadding(20,20,20,20);
+            img.setBackgroundColor(Color.argb(0,0,0,0));
+            img.setImageResource(cropID[8]);
+            layout.addView(img);
+        }
+
+        //충남
+        else if(dist.indexOf("44") == 0){
+            for(i=7;i<12;i++){
+                ImageButton img = new ImageButton(context);
+
+                img.setLayoutParams(new ViewGroup.LayoutParams(350,220));
+                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                img.setPadding(20,20,20,20);
+                img.setBackgroundColor(Color.argb(0,0,0,0));
+                img.setImageResource(cropID[i]);
+                layout.addView(img);
+            }
+
+        }
+
+        //대전
+        else if(dist.indexOf("30")==0){
+            for(i=12;i<16;i++){
+                ImageButton img = new ImageButton(context);
+
+                img.setLayoutParams(new ViewGroup.LayoutParams(350,220));
+                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                img.setPadding(20,20,20,20);
+                img.setBackgroundColor(Color.argb(0,0,0,0));
+                img.setImageResource(cropID[i]);
+                layout.addView(img);
+            }
+
+        }
+
+        //세종
+        else if(dist.indexOf("36")==0){
+            for(i=15;i<17;i++){
+                ImageButton img = new ImageButton(context);
+
+                img.setLayoutParams(new ViewGroup.LayoutParams(350,220));
+                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                img.setPadding(20,20,20,20);
+                img.setBackgroundColor(Color.argb(0,0,0,0));
+                img.setImageResource(cropID[i]);
+                layout.addView(img);
+            }
+        }
     }
 
     public void MyonClick(View view){
