@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button1"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="MyonClick"
             android:layout_weight="1"
             android:text="날씨 조회"
-            android:layout_margin="15dp"/>
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_margin="25dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

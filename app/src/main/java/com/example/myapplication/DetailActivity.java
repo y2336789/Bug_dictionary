@@ -125,12 +125,11 @@ public class DetailActivity extends AppCompatActivity {
                 layout.addView(img);
             }
         }
-    }
 
-    public void MyonClick(View view){
         GetXMLTask1 task = new GetXMLTask1();
         task.execute(link);
     }
+
     private class GetXMLTask1 extends AsyncTask<String, Void, Document> {
 
         @Override
