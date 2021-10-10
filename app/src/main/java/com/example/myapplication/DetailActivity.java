@@ -41,6 +41,7 @@ public class DetailActivity extends AppCompatActivity {
     private BugAdapter adapter;
     private VirusAdapter virusAdapter;
     private ArrayList<Bug> bugs = new ArrayList<>();
+    private ArrayList<Virus> viruses = new ArrayList<>();
     ArrayList<Virus> virus = new ArrayList<>();
     private RecyclerView recyclerView;
     private Button change_btn;
@@ -50,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
     Document doc = null;
     LinearLayout layout;
     int num = 0;
-    int check = 0;
+    int change = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.weather);
         recyclerView = findViewById(R.id.weather_recycler);
         adapter = new BugAdapter(bugs, this);
+        virusAdapter = new VirusAdapter(viruses, this);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -94,45 +96,36 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-//        int j;
-//        for(j=0;j<17;j++){
-//            imageView[j] = findViewById(cropID[j]);
-//
-//            if(j==0) {
-//                imageView[j].setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                       readRss("수박");
-//                    }
-//                });
-//            }
-//        }
-
         int i;
-        for(i=0;i<7;i++){
+        for(i=0;i<7;i++) {
             ImageButton img = new ImageButton(context);
 
-            img.setLayoutParams(new ViewGroup.LayoutParams(350,220));
+            img.setLayoutParams(new ViewGroup.LayoutParams(350, 220));
             img.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            img.setPadding(20,20,20,20);
-            img.setBackgroundColor(Color.argb(0,0,0,0));
+            img.setPadding(20, 20, 20, 20);
+            img.setBackgroundColor(Color.argb(0, 0, 0, 0));
             img.setImageResource(cropID[i]);
 
-            switch (i){
+            switch (i) {
                 case 0:
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            check = 0;
+                            bugs.clear();
+                            viruses.clear();
                             readRss("배추");
+                            V_readRss("배추");
                         }
                     });
                     break;
-                case 1 :
+                case 1:
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("파");
+                            V_readRss("파");
                         }
                     });
                     break;
@@ -140,7 +133,10 @@ public class DetailActivity extends AppCompatActivity {
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("고추");
+                            V_readRss("고추");
                         }
                     });
                     break;
@@ -148,7 +144,10 @@ public class DetailActivity extends AppCompatActivity {
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("무");
+                            V_readRss("무");
                         }
                     });
                     break;
@@ -156,7 +155,10 @@ public class DetailActivity extends AppCompatActivity {
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("딸기");
+                            V_readRss("딸기");
                         }
                     });
                     break;
@@ -164,7 +166,10 @@ public class DetailActivity extends AppCompatActivity {
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("토마토");
+                            V_readRss("토마토");
                         }
                     });
                     break;
@@ -173,7 +178,10 @@ public class DetailActivity extends AppCompatActivity {
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            bugs.clear();
+                            viruses.clear();
                             readRss("호박");
+                            V_readRss("호박");
                         }
                     });
                     break;
@@ -373,6 +381,53 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    void V_readRss(String cropName) {
+        if (cropName.equals("배추")) {
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                virusAdapter.notifyDataSetChanged();
+            }
+            try {
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=배추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+               V_RssFeedTask task = new V_RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }else if (cropName.equals("파")) {
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                virusAdapter.notifyDataSetChanged();
+            }
+            try {
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=파&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                V_RssFeedTask task = new V_RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (cropName.equals("고추")) {
+            this_name = cropName;
+            if(viruses != null) {
+                viruses.clear();
+                virusAdapter.notifyDataSetChanged();
+            }
+            try {
+                URL url = new URL("http://ncpms.rda.go.kr/npmsAPI/service?cropName=고추&insectKorName=&apiKey="
+                        + key + "&serviceCode=SVC01&displayCount=50&serviceType=AA001&sickKey=");
+                V_RssFeedTask task = new V_RssFeedTask();
+                task.execute(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private class GetXMLTask1 extends AsyncTask<String, Void, Document> {
 
         @Override
@@ -529,6 +584,78 @@ public class DetailActivity extends AppCompatActivity {
             adapter.notifyItemInserted(bugs.size());
         }
     }
+    class V_RssFeedTask extends AsyncTask<URL, Void, String> {
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL url = urls[0];
+
+            try {
+                InputStream is = url.openStream();
+
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser xpp = factory.newPullParser();
+
+                xpp.setInput(is, "utf-8");
+                int eventType = xpp.getEventType();
+
+                Virus virus = null;
+                String tagName = null;
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+                        case XmlPullParser.START_TAG:
+                            tagName = xpp.getName();
+
+                            if (tagName.equals("item")) {
+                                virus = new Virus();
+                            } else if (tagName.equals("sickNameKor")) {
+                                xpp.next();
+                                if (virus != null) virus.setName(xpp.getText());
+                            } else if (tagName.equals("thumbImg")) {
+                                xpp.next();
+                                if (virus != null) virus.setImgUrl(xpp.getText());
+                            } else if (tagName.equals("cropName")) {
+                                xpp.next();
+                                virus.setTarget(xpp.getText());
+                            } else if (tagName.equals("sickKey")) {
+                                xpp.next();
+                                if (virus != null) virus.setVirusKey(xpp.getText());
+                            }
+                            break;
+                        case XmlPullParser.TEXT:
+                            break;
+                        case XmlPullParser.END_TAG:
+                            tagName = xpp.getName();
+                            if (tagName.equals("item")) {
+                                if (virus.getTarget().equals(this_name)) {
+                                    if(virus.getImgUrl() != null) {
+                                        viruses.add(virus);
+                                        virus = null;
+                                    }
+                                }
+                                // Recycler Apdater에 데이터가 변경되었다고 통지
+                                publishProgress();
+                            }
+                            break;
+                    }
+                    eventType = xpp.next();
+                }// while
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            }
+            return "파싱종료";
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            virusAdapter.notifyItemInserted(viruses.size());
+        }
+    }
     private void originalView(){
 //        adapter = new BugAdapter(bugs, this);
         recyclerView.setAdapter(adapter);
@@ -537,8 +664,6 @@ public class DetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
     }
     private void changeView(){
-        // 식량작물
-        virusAdapter = new VirusAdapter(virus, this);
         recyclerView.setAdapter(virusAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

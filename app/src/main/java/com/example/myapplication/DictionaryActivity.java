@@ -646,7 +646,8 @@ public class DictionaryActivity extends AppCompatActivity {
                                 xpp.next();
                                 if(bug!=null) {
                                     target_name = xpp.getText();
-                                    bug.setName(xpp.getText());
+                                    if(!target_name.equals("애긴노린재"))
+                                        bug.setName(xpp.getText());
                                 }
                             }else if(tagName.equals("thumbImg")){
                                 xpp.next();
@@ -677,7 +678,8 @@ public class DictionaryActivity extends AppCompatActivity {
                             tagName=xpp.getName();
                             if(tagName.equals("item")){
                                 if(bug.getCropName().equals(this_name)){
-                                    bugs.add(bug);
+                                    if(bug.getName() != null)
+                                        bugs.add(bug);
                                     bug=null;
                                 }
                                 publishProgress();

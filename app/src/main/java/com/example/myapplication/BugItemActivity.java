@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BugItemActivity extends AppCompatActivity {
-    public String name, gen, spe, fam, ord, dmg, eco, tag_url, prevent;
+    public String name, gen, spe, fam, ord, dmg, eco, tag_url, prevent, keynum;
     public String key = "20218f5922b84a6b4691db8472132ececb19";
     public int count = 0;
     public int photoCount = 0;
@@ -50,7 +50,7 @@ public class BugItemActivity extends AppCompatActivity {
         container3 = (LinearLayout) findViewById(R.id.p_UpTitle);
 
         Intent intent = getIntent();
-        String keynum = intent.getStringExtra("InsectKey");
+        keynum = intent.getStringExtra("InsectKey");
         img=findViewById(R.id.p_img);
         left=findViewById(R.id.p_left);
         right=findViewById(R.id.p_right);
@@ -101,7 +101,10 @@ public class BugItemActivity extends AppCompatActivity {
                                 }
                             }else if(tagName.equals("image")){
                                 xpp.next();
-                                tag_url = xpp.getText(); count++;
+//                                tag_url = xpp.getText(); count++;
+//                                images.add(tag_url);
+                                tag_url = stripHtml(xpp.getText());
+                                count++;
                                 images.add(tag_url);
                             }else if(tagName.equals("insectFamily")){
                                 xpp.next();
@@ -181,6 +184,7 @@ public class BugItemActivity extends AppCompatActivity {
                 }
             });
 
+
             publishProgress(name, gen, spe, fam, ord, dmg, eco, prevent);
 
             return null;
@@ -188,6 +192,11 @@ public class BugItemActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+
+//            if((name.equals("애긴노린재") & (keynum.equals("H00000686")))){
+//                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/hlsct/&imageFileName=수수 가해 모습[20191130104611752]_tmb.jpg");
+//                p_count = 0;
+//            }
             CreateTextView_T(values[0]);
             WhatIs();
             sub();
