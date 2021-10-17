@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class VirusActivity extends AppCompatActivity {
     private ArrayList<Virus> viruses = new ArrayList<>();
     private VirusAdapter adapter;
     private String this_name;
-    private Button button1, button2, button3;
+    private ImageButton button1, button2, button3;
     private int value = 1;
     private String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감","감귤"};
     private String[] food_crops = {"논벼","보리","콩","팥","녹두","옥수수","조","수수","감자","고구마"};

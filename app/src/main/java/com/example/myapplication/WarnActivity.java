@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ public class WarnActivity extends AppCompatActivity {
     private BugAdapter adapter, adapter2, adapter3;
     private VirusAdapter virusAdapter, virusAdapter2, virusAdapter3;
     private Button button, button1;
+    private ImageButton btns;
 
     private int num = 0;
 
@@ -32,11 +35,20 @@ public class WarnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_warn);
 
         button = findViewById(R.id.warning_old);
+        btns = (ImageButton)findViewById(R.id.caution_btn3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(WarnActivity.this, );
 //                startActivity(intent);
+            }
+        });
+
+        btns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentswap = new Intent(WarnActivity.this, CautionActivity.class);
+                startActivity(intentswap);
             }
         });
 

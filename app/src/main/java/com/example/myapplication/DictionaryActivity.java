@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,7 +35,8 @@ public class DictionaryActivity extends AppCompatActivity {
     private String[] crop_names = {"사과","배","복숭아","밤","포도","참다래(키위,다래)","무화과","블루베리","감", "감귤"};
     private String[] food_crops = {"논벼","보리","콩","팥","녹두","옥수수","조","수수","감자","고구마"};
     private String[] food_vegetable = {"수박", "참외", "토마토", "딸기", "메론", "오이", "호박", "가지", "고추", "배추", "양배추", "상추"};
-    private Button btn, btn1, btn2, food, fruit, vegetable;
+    private ImageButton btn, btn1, btn2, food, fruit, vegetable;
+
     private int value = 1;
 
     @Override

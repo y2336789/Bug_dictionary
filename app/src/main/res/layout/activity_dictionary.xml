@@ -5,50 +5,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:scaleType="fitXY"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="주의"
-            android:id="@+id/caution_btn"
-            android:background="@drawable/left_btn_background"/>
 
-        <Button
+        <ImageButton
+            android:id="@+id/caution_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/cautionwhite" />
+
+        <ImageButton
             android:id="@+id/warning_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="예보"
-            android:background="@drawable/right_btn_background"/>
-    </RelativeLayout>
+            android:layout_height="74dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/forecastwhite" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <ImageButton
             android:id="@+id/food_crop"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_weight="1"
-            android:text="식량작물"/>
+            android:src="@drawable/cropbtn"
+            android:background="@android:color/transparent"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/fruit"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="과수"/>
+            android:background="@android:color/transparent"
+            android:src="@drawable/fruitbtn"
+            android:layout_weight="1"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/vegetable"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:layout_weight="1"
+            android:src="@drawable/vegibtn"
             android:text="채소" />
     </LinearLayout>
 
@@ -56,12 +68,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <ImageButton
+            android:id="@+id/go_sick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="병 리스트 보러가기"
-            android:id="@+id/go_sick"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/virlist" />
     </RelativeLayout>
 
     <Spinner

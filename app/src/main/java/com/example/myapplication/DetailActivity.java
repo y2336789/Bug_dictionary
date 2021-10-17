@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button change_btn;
     TextView tview, tv00;
-    ImageButton imagbtn;
+    ImageView imagbtn;
     Context context;
     Document doc = null;
     LinearLayout layout;
@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         tview = (TextView)findViewById(R.id.textView);
-        imagbtn = (ImageButton)findViewById(R.id.imagebtn);
+        imagbtn = (ImageView)findViewById(R.id.imagebtn);
         layout = (LinearLayout)findViewById(R.id.layout);
         context = this;
         tv00=(TextView)findViewById(R.id.tv00);
@@ -471,13 +471,13 @@ public class DetailActivity extends AppCompatActivity {
                     imagbtn.setImageResource(R.drawable.sunny);
                     break;
                 case "구름 조금" :
-                    imagbtn.setImageResource(R.drawable.cloudy);
-                    break;
-                case "구름 많음" :
                     imagbtn.setImageResource(R.drawable.littlecloud);
                     break;
+                case "구름 많음" :
+                    imagbtn.setImageResource(R.drawable.clouds);
+                    break;
                 case "흐림" :
-                    imagbtn.setImageResource(R.drawable.cloud);
+                    imagbtn.setImageResource(R.drawable.cloudy);
                     break;
                 case "비":
                     imagbtn.setImageResource(R.drawable.rain);

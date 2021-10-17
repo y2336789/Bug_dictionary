@@ -28,7 +28,7 @@
                 android:maxLines="1"
                 android:padding="8dp"
                 android:text="title"
-                android:textColor="@color/design_default_color_primary_dark"
+                android:textColor="#557155"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 />

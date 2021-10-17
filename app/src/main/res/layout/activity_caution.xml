@@ -9,24 +9,52 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이번 달에 주의해야할 병해충들이에요"
-            android:textSize="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:textAlignment="center"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/noticebar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/caution_btn2"
+                android:layout_width="263dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:scaleType="center"
+                android:src="@drawable/caution" />
+
+            <ImageButton
+                android:id="@+id/warning_btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/forecastwhite" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#81A682"
             android:text="병 리스트로 전환"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I. 식량작물"
-            android:textSize="18dp"></TextView>
+            android:textSize="18dp">
+
+        </TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/caution_recycler"
             android:layout_width="match_parent"
@@ -65,6 +93,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/caution_old"
             android:layout_gravity="center"
+            android:backgroundTint="#81A682"
             android:text="예전에 발생했던 병해충 리스트 보기">
 
         </Button>

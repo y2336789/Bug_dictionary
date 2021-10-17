@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ public class CautionActivity extends AppCompatActivity {
     BugAdapter adapter, adapter2, adapter3;
     VirusAdapter virusAdapter, virusAdapter2, virusAdapter3;
     Button button, button1;
+    ImageButton btn;
     int num = 0;
 
     ArrayList<Bug> bugs = new ArrayList<>();
@@ -32,11 +34,21 @@ public class CautionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_caution);
 
         button = findViewById(R.id.caution_old);
+        btn=(ImageButton)findViewById(R.id.warning_btn2);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent3 = new Intent(CautionActivity.this, OldCautionActivity.class);
                 startActivity(intent3);
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentchange = new Intent(CautionActivity.this, WarnActivity.class);
+                startActivity(intentchange);
             }
         });
 
