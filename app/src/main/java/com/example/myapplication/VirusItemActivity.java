@@ -206,7 +206,7 @@ public class VirusItemActivity extends AppCompatActivity {
             sub();
             CreateTextView_What_Dmg();
             if(dmg == null)
-              CreateTextView_Non_Dmg();
+                CreateTextView_Non_Dmg();
             else
                 CreateTextView(values[1]);
             CreateTextView_How_Prev();
@@ -280,7 +280,7 @@ public class VirusItemActivity extends AppCompatActivity {
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin = 35;
-        lp.bottomMargin = 50;
+        lp.bottomMargin = 30;
         view.setLayoutParams(lp);
         container.addView(view);
 
@@ -288,7 +288,7 @@ public class VirusItemActivity extends AppCompatActivity {
     private void CreateTextView_What_Dmg() {
         TextView view = new TextView(this);
         view.setText("I. 어떤 피해를 발생시키나요??");
-        view.setTextSize(14);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -296,25 +296,27 @@ public class VirusItemActivity extends AppCompatActivity {
         lp.topMargin=20;
         lp.bottomMargin=10;
         lp.leftMargin=35;
-        container.addView(view);
+        container2.addView(view);
     }
     private void CreateTextView(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
-        view.setLineSpacing(0, 1.2f);
+        view.setLineSpacing(0, 1.5f);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.leftMargin=30;
+        lp.topMargin=40;
+        lp.leftMargin=50;
+        lp.bottomMargin=100;
         lp.rightMargin=30;
         view.setLayoutParams(lp);
-        container.addView(view);
+        container2.addView(view);
     }
     private void CreateTextView_How_Prev() {
         TextView view = new TextView(this);
         view.setText("Ⅱ. 어떻게 예방하나요??");
-        view.setTextSize(14);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -326,57 +328,57 @@ public class VirusItemActivity extends AppCompatActivity {
     private void CreateTextView2(String a) {
         TextView view = new TextView(this);
         view.setText(a);
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
-        view.setLineSpacing(0, 1.2f);
+        view.setLineSpacing(0, 1.5f);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.leftMargin=30;
+        lp.topMargin=40;
+        lp.leftMargin=50;
+        lp.bottomMargin=100;
         lp.rightMargin=30;
-        lp.bottomMargin=50;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
     private void CreateTextView_Non_Dmg() {
         TextView view = new TextView(this);
-        view.setText("정확한 피해 현상이 없습니다.");
+        view.setText("- 정확한 피해 현상이 없습니다.");
         view.setTextSize(12);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.topMargin=20;
-        lp.bottomMargin=10;
-        lp.leftMargin=35;
+        lp.topMargin=10;
+        lp.leftMargin = 50;
+        lp.bottomMargin = 80;
         view.setLayoutParams(lp);
         container.addView(view);
     }
     private void CreateTextView_Non_Prev() {
         TextView view = new TextView(this);
-        view.setText("정확한 예방 정보가 없습니다.");
-        view.setTextSize(12);
+        view.setText("- 정확한 예방 정보가 없습니다.");
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.topMargin=20;
-        lp.bottomMargin=10;
-        lp.leftMargin=35;
+        lp.topMargin=10;
+        lp.leftMargin = 50;
+        lp.bottomMargin = 80;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
     private void What_Pesticides(){
         TextView view = new TextView(this);
         view.setText("Ⅲ. 어떤 약을 써야하나요?");
-        view.setTextSize(15);
+        view.setTextSize(20);
         view.setTextColor(Color.BLACK);
 
         TextView view1 = new TextView(this);
-        view1.setText("준비 중입니다..");
-        view1.setTextSize(12);
+        view1.setText(" -  " + "준비 중입니다..");
+        view1.setTextSize(15);
         view1.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.topMargin=20;
-        lp.bottomMargin=10;
+        lp.bottomMargin=30;
         lp.leftMargin=35;
         view.setLayoutParams(lp);
         view1.setLayoutParams(lp);
@@ -386,7 +388,7 @@ public class VirusItemActivity extends AppCompatActivity {
     private void from(){
         TextView view = new TextView(this);
         view.setText("출처 : 농촌진흥청");
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

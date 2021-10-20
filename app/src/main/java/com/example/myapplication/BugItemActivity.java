@@ -101,8 +101,9 @@ public class BugItemActivity extends AppCompatActivity {
                                 }
                             }else if(tagName.equals("image")){
                                 xpp.next();
-//                                tag_url = xpp.getText(); count++;
-//                                images.add(tag_url);
+                                if(xpp.getText() == null){
+                                    break;
+                                }
                                 tag_url = stripHtml(xpp.getText());
                                 count++;
                                 images.add(tag_url);
@@ -157,9 +158,6 @@ public class BugItemActivity extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
-            arrays = images.toArray(new String[images.size()]);
-            new LoadImage().execute(arrays[0]);
-            p_count = arrays.length - 1;
 
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -184,14 +182,24 @@ public class BugItemActivity extends AppCompatActivity {
                 }
             });
 
-
             publishProgress(name, gen, spe, fam, ord, dmg, eco, prevent);
 
+            if(!name.equals("등나무가루깍지벌레")){
+                arrays = images.toArray(new String[images.size()]);
+                new LoadImage().execute(arrays[0]);
+                p_count = arrays.length - 1;
+            }
             return null;
         }
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+
+            // api에 사진이 공식적으로 없는 케이스
+            if(name.equals("등나무가루깍지벌레")){
+                new LoadImage().execute("https://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?atchFileId=FILE_000000000366698&fileSn=1&thumbYn=Y");
+                p_count = 0;
+            }
 
 //            if((name.equals("애긴노린재") & (keynum.equals("H00000686")))){
 //                new LoadImage().execute("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/hlsct/&imageFileName=수수 가해 모습[20191130104611752]_tmb.jpg");
@@ -380,7 +388,7 @@ public class BugItemActivity extends AppCompatActivity {
         view1.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.topMargin=50;
+        lp.topMargin=10;
         lp.bottomMargin=30;
         lp.leftMargin=35;
         view.setLayoutParams(lp);
@@ -391,7 +399,7 @@ public class BugItemActivity extends AppCompatActivity {
     private void from(){
         TextView view = new TextView(this);
         view.setText("출처 : 농촌진흥청");
-        view.setTextSize(12);
+        view.setTextSize(15);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -401,34 +409,39 @@ public class BugItemActivity extends AppCompatActivity {
     }
     private void CreateTextView_Non_Dmg() {
         TextView view = new TextView(this);
-        view.setText("정확한 피해 현상이 없습니다.");
-        view.setTextSize(12);
+        view.setText("- 정확한 피해 현상이 없습니다.");
+        view.setTextSize(16);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        lp.topMargin=10;
+        lp.leftMargin = 50;
+        lp.bottomMargin = 80;
         view.setLayoutParams(lp);
-        container.addView(view);
+        container2.addView(view);
     }
     private void CreateTextView_Non_info() {
         TextView view = new TextView(this);
-        view.setText("정확한 생태 정보가 없습니다..");
-        view.setTextSize(12);
+        view.setText("- 정확한 생태 정보가 없습니다..");
+        view.setTextSize(16);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        lp.leftMargin = 50;
+        lp.bottomMargin = 80;
         view.setLayoutParams(lp);
         container2.addView(view);
     }
     private void CreateTextView_Non_prevent() {
         TextView view = new TextView(this);
-        view.setText("정확한 방제 정보가 없습니다..");
-        view.setTextSize(12);
+        view.setText("- 정확한 방제 정보가 없습니다..");
+        view.setTextSize(16);
         view.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        lp.topMargin=10;
+        lp.bottomMargin=80;
+        lp.leftMargin=35;
         view.setLayoutParams(lp);
         container2.addView(view);
     }

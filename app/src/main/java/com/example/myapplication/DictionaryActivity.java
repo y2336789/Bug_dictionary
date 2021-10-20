@@ -659,6 +659,75 @@ public class DictionaryActivity extends AppCompatActivity {
                                 else if(target_name.equals("기장테두리진딧물") & (this_name.equals("보리"))){
                                     bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AJ0184M001[20110106120000000]_wm.jpg");
                                 }
+                                else if(target_name.equals("콩명나방") & (this_name.equals("녹두"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=콩명나방 성충[20191129111814498]_wm.jpg");
+                                }
+                                else if(target_name.equals("보리두갈래진딧물") & (this_name.equals("보리"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AJ0186M001[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("풀색노린재") & (this_name.equals("보리"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZL1BX0048M001[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("기장테두리진딧물") & (this_name.equals("조"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=기장테두리진딧물 성충[20161128104252734]_wm.jpg");
+                                }
+                                else if(target_name.equals("썩덩나무노린재") & (this_name.equals("조"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=썩덩나무노린재_1[20180402092557894]_wm.jpg");
+                                }
+                                else if(target_name.equals("거세미나방") & (this_name.equals("수수"))){
+                                    bug.setImgUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Agrotis_segetum01.jpg/250px-Agrotis_segetum01.jpg");
+                                }
+                                else if(target_name.equals("멸강나방") & (this_name.equals("수수"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZR1DS0188M001[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("담배가루이") & (this_name.equals("고구마"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AG0007M001[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("거북밀깍지벌레") & (this_name.equals("배"))){
+                                    bug.setImgUrl("https://mblogthumb-phinf.pstatic.net/MjAxODAxMjBfMTMg/MDAxNTE2NDIwMDIyMTg0.AcjLtw2n_rlqy8P0zHV5Uc8Twi7Tnaj47I0J9rZ1-V0g.PN-TZI3zB7IrZDAsLKlHrDA7bUQgZOqbCYP4UbFPSmkg.JPEG.seoya1010/%EB%B0%80%EA%B1%B0%EB%B6%81%EA%B9%8D%EC%A7%80%EB%B2%8C%EB%A0%880114-1-1.JPG?type=w2");
+                                }
+                                else if(target_name.equals("버들가루깍지벌레") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1CL0006M001[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("등나무가루깍지벌레") & (this_name.equals("배"))){
+                                    bug.setImgUrl("https://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?atchFileId=FILE_000000000366698&fileSn=1&thumbYn=Y");
+                                }
+                                else if(target_name.equals("목화진딧물") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1AJ0158M001[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("배꽃바구미") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZO1CF0146M001[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("복숭아거위벌레") & (this_name.equals("배"))){
+                                    bug.setImgUrl("https://www.stagbeetles.com/data/file/photo_coleoptera/thumb-2009636338_j3VoApQy_BAB9BCFEBEC6B0C5C0A7_920x611.jpg");
+                                }
+                                else if(target_name.equals("복숭아명나방") & (this_name.equals("배"))){
+                                    bug.setImgUrl("https://mblogthumb-phinf.pstatic.net/data29/2007/9/1/30/%BA%B9%BC%FE%BE%C6%B8%ED%B3%AA%B9%E61_dachori.jpg?type=w2");
+                                }
+                                else if(target_name.equals("뽕나무하늘소") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=사과_하늘소_뽕나무하늘소[20161014163815569]_wm.jpg");
+                                }
+                                else if(target_name.equals("사과굴나방") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZR1CK0015M001[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("사과면충") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=사과면충 약충과 성충_1[20180402111113487]_wm.jpg");
+                                }
+                                else if(target_name.equals("사과응애") & (this_name.equals("배"))){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZU1KT0026M001[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("점박이응애")){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZU1KT0035M002[201010210000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("가루깍지벌레")){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZM1CL0021M003[20110106120000000]_wm.jpg");
+                                }
+                                else if(target_name.equals("선녀벌레")){
+                                    bug.setImgUrl("https://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?atchFileId=FILE_000000000366727&fileSn=2&thumbYn=Y");
+                                }
+                                else if(target_name.equals("애모무늬잎말이나방")){
+                                    bug.setImgUrl("http://ncpms.rda.go.kr/npmsAPI/thumbnailViewer.mo?uploadSpec=npms&uploadSubDirectory=/photo/spcs/&imageFileName=ZR1FF0001M001[201010210000000]_wm.jpg");
+                                }
 //                                else if(target_name.equals("끝동매미충") & (this_name.equals("논벼"))){
 //                                    bug.setImgUrl();
 //                                }
