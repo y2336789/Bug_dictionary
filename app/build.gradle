@@ -6,7 +6,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.forfarmers.myapplication"
         minSdk 29
         targetSdk 30
         versionCode 1
